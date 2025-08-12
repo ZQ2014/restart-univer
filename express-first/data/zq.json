@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "data": {
+    "success": true,
+    "data": {
+      "success": true,
+      "data": {
+        "name": "张三",
+        "email": "zhangsan@example.com",
+        "projects": [
+          {
+            "id": "p001",
+            "name": "项目A12",
+            "status": "进行中"
+          },
+          {
+            "id": "p002",
+            "name": "项目B",
+            "status": "已完成"
+          }
+        ],
+        "preferences": {
+          "theme": "dark",
+          "notifications": true
+        }
+      }
+    }
+  }
+}

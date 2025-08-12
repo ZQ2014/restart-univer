@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Express + Univer.js 集成解决方案</title>
+    <script src="https://univerjs.io/design/lib/universheet.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://univerjs.io/design/lib/css/universheet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3f37c9;
+        --success: #4cc9f0;
+        --dark: #1a1a2e;
+        --light: #f8f9fa;
+        --background: #f0f2f5;
+        --border: #dee2e6;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+        color: #333;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 90vh;
+      }
+
+      header {
+        background: linear-gradient(90deg, var(--dark), var(--secondary));
+        color: white;
+        padding: 25px 30px;
+        text-align: center;
+        position: relative;
+      }
+
+      .header-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      h1 i {
+        color: var(--success);
+        background: white;
+        border-radius: 50%;
+        padding: 12px;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 15px;
+      }
+
+      .tech-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 5px 15px;
+        border-radius: 20px;
+        margin: 0 5px;
+        font-size: 0.9rem;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        padding: 25px;
+        flex: 1;
+      }
+
+      @media (max-width: 992px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .panel {
+        background: var(--light);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--primary);
+      }
+
+      .panel-header h2 {
+        color: var(--dark);
+        font-size: 1.5rem;
+      }
+
+      .panel-header .icon {
+        width: 40px;
+        height: 40px;
+        background: var(--primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .univer-container {
+        height: 400px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+
+      .api-info {
+        background: #2c3e50;
+        color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        overflow: auto;
+      }
+
+      .api-endpoint {
+        color: #4cc9f0;
+        font-weight: bold;
+      }
+
+      .api-method {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .get-method {
+        background: #2ecc71;
+        color: white;
+      }
+
+      .post-method {
+        background: #3498db;
+        color: white;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: auto;
+      }
+
+      .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        background: var(--primary);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-success {
+        background: #2ecc71;
+      }
+
+      .btn-warning {
+        background: #f39c12;
+      }
+
+      .btn-danger {
+        background: #e74c3c;
+      }
+
+      .btn-secondary {
+        background: #7f8c8d;
+      }
+
+      .status-container {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+
+      .status-row {
+        display: flex;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .status-row:last-child {
+        border-bottom: none;
+      }
+
+      .status-label {
+        flex: 0 0 150px;
+        font-weight: 600;
+        color: #555;
+      }
+
+      .status-value {
+        flex: 1;
+        font-weight: 500;
+      }
+
+      .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 10px;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transform: translateX(200%);
+        transition: transform 0.4s ease;
+        z-index: 1000;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        background: #27ae60;
+      }
+
+      .notification.error {
+        background: #e74c3c;
+      }
+
+      .notification.info {
+        background: #3498db;
+      }
+
+      footer {
+        background: var(--dark);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9rem;
+      }
+
+      .server-code {
+        background: #1e1e1e;
+        color: #dcdcdc;
+        border-radius: 8px;
+        padding: 20px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        overflow: auto;
+        max-height: 300px;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          grid-template-columns: 1fr;
+        }
+
+        .controls {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-content">
+          <h1><i class="fas fa-table"></i> Express + Univer.js 集成方案</h1>
+          <p class="subtitle">使用Node.js和Express服务器运行Univer.js工作簿</p>
+          <div>
+            <span class="tech-badge">Express</span>
+            <span class="tech-badge">Univer.js</span>
+            <span class="tech-badge">Node.js</span>
+            <span class="tech-badge">REST API</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="icon">1</div>
+            <h2>Univer.js 工作簿</h2>
+          </div>
+
+          <div class="univer-container" id="univer-container"></div>
+
+          <div class="controls">
+            <button id="load-btn" class="btn btn-success">
+              <span class="spinner hidden" id="load-spinner"></span>
+              <i class="fas fa-download"></i> 从服务器加载
+            </button>
+            <button id="save-btn" class="btn btn-warning">
+              <i class="fas fa-save"></i> 保存到服务器
+            </button>
+            <button id="reset-btn" class="btn btn-danger">
+              <i class="fas fa-redo"></i> 重置工作簿
+            </button>
+          </div>
+
+          <div class="status-container">
+            <div class="status-row">
+              <div class="status-label">工作簿状态</div>
+              <div class="status-value" id="workbook-status">就绪</div>
+            </div>
+            <div class="status-row">
+              <div class="status-label">最后加载时间</div>
+              <div class="status-value" id="load-time">-</div>
+            </div>
+            <div class="status-row">
+              <div class="status-label">最后保存时间</div>
+              <div class="status-value" id="save-time">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="icon">2</div>
+            <h2>Express API 接口</h2>
+          </div>
+
+          <div class="api-info">
+            <div class="api-method get-method">GET</div>
+            <span class="api-endpoint">/api/workbook</span>
+            <p>获取当前工作簿数据</p>
+
+            <div class="api-method post-method">POST</div>
+            <span class="api-endpoint">/api/workbook</span>
+            <p>更新工作簿数据</p>
+            <p>请求体: JSON格式的工作簿数据</p>
+
+            <div class="api-method get-method">GET</div>
+            <span class="api-endpoint">/api/status</span>
+            <p>获取服务器状态</p>
+          </div>
+
+          <h3>Express 服务器代码</h3>
+          <div class="server-code">
+            const express = require('express'); const bodyParser =
+            require('body-parser'); const { Workbook } =
+            require('@univerjs/core'); const app = express();
+            app.use(bodyParser.json()); // 内存中存储工作簿数据 let workbookData
+            = null; // 初始化默认工作簿 function initDefaultWorkbook() { return
+            { id: 'workbook-01', sheetOrder: ['sheet1'], sheets: { sheet1: { id:
+            'sheet1', name: '默认工作表', cellData: { '0': { '0': { v:
+            '欢迎使用Univer.js', t: 1 }, '1': { v: 'Express服务器', t: 1 } } } }
+            } }; } // 获取工作簿数据 app.get('/api/workbook', (req, res) => { if
+            (!workbookData) { workbookData = initDefaultWorkbook(); }
+            res.json(workbookData); }); // 保存工作簿数据
+            app.post('/api/workbook', (req, res) => { try { // 验证数据格式 if
+            (!req.body || !req.body.sheets) { return res.status(400).json({
+            error: '无效的工作簿数据' }); } // 保存数据 workbookData = req.body;
+            res.json({ success: true, message: '工作簿保存成功' }); } catch
+            (error) { res.status(500).json({ error: '服务器错误' }); } }); //
+            服务器状态 app.get('/api/status', (req, res) => { res.json({ status:
+            '运行中', version: '1.0.0', workbookLoaded: !!workbookData }); });
+            // 启动服务器 const PORT = process.env.PORT || 3000;
+            app.listen(PORT, () => { console.log(`服务器运行在
+            http://localhost:${PORT}`); });
+          </div>
+
+          <div class="controls">
+            <button id="status-btn" class="btn btn-secondary">
+              <i class="fas fa-server"></i> 检查服务器状态
+            </button>
+          </div>
+
+          <div class="status-container">
+            <div class="status-row">
+              <div class="status-label">服务器状态</div>
+              <div class="status-value" id="server-status">未知</div>
+            </div>
+            <div class="status-row">
+              <div class="status-label">服务器版本</div>
+              <div class="status-value" id="server-version">-</div>
+            </div>
+            <div class="status-row">
+              <div class="status-label">工作簿加载</div>
+              <div class="status-value" id="server-workbook">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>© 2023 Express + Univer.js 集成方案 | 使用Node.js运行电子表格应用</p>
+      </footer>
+    </div>
+
+    <div class="notification" id="notification">操作成功完成！</div>
+
+    <script>
+      // 导入Univer核心模块
+      const {
+        Univer,
+        UniverInstanceType,
+        Workbook,
+        ICommandService,
+        IUniverInstanceService,
+      } = universheet;
+
+      // DOM元素
+      const univerContainer = document.getElementById("univer-container");
+      const loadBtn = document.getElementById("load-btn");
+      const saveBtn = document.getElementById("save-btn");
+      const resetBtn = document.getElementById("reset-btn");
+      const statusBtn = document.getElementById("status-btn");
+      const loadSpinner = document.getElementById("load-spinner");
+      const workbookStatus = document.getElementById("workbook-status");
+      const loadTime = document.getElementById("load-time");
+      const saveTime = document.getElementById("save-time");
+      const serverStatus = document.getElementById("server-status");
+      const serverVersion = document.getElementById("server-version");
+      const serverWorkbook = document.getElementById("server-workbook");
+      const notification = document.getElementById("notification");
+
+      // 初始化Univer
+      const univer = new Univer();
+      let workbookInstance = null;
+
+      // 初始化默认工作簿
+      function initDefaultWorkbook() {
+        return univer.createUniverSheet({
+          id: "workbook-01",
+          sheetOrder: ["sheet1"],
+          sheets: {
+            sheet1: {
+              id: "sheet1",
+              name: "默认工作表",
+              cellData: {
+                0: {
+                  0: { v: "欢迎使用Univer.js", t: 1 },
+                  1: { v: "Express服务器", t: 1 },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // 渲染工作簿
+      function renderWorkbook() {
+        univer.render(univerContainer);
+      }
+
+      // 显示通知
+      function showNotification(message, type) {
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add("show");
+
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 3000);
+      }
+
+      // 更新状态时间
+      function updateTime(element) {
+        const now = new Date();
+        element.textContent = now.toLocaleTimeString();
+      }
+
+      // 从服务器加载工作簿
+      async function loadWorkbookFromServer() {
+        try {
+          loadSpinner.classList.remove("hidden");
+          workbookStatus.textContent = "正在加载...";
+
+          const response = await fetch("/api/workbook");
+          if (!response.ok) {
+            throw new Error("服务器响应错误");
+          }
+
+          const workbookData = await response.json();
+
+          // 销毁现有工作簿
+          if (workbookInstance) {
+            workbookInstance.dispose();
+          }
+
+          // 创建新工作簿
+          workbookInstance = univer.createUniverSheet(workbookData);
+          renderWorkbook();
+
+          updateTime(loadTime);
+          workbookStatus.textContent = "已加载";
+          showNotification("工作簿已从服务器加载", "success");
+        } catch (error) {
+          console.error("加载工作簿失败:", error);
+          workbookStatus.textContent = "加载失败";
+          showNotification(`加载失败: ${error.message}`, "error");
+        } finally {
+          loadSpinner.classList.add("hidden");
+        }
+      }
+
+      // 保存工作簿到服务器
+      async function saveWorkbookToServer() {
+        try {
+          workbookStatus.textContent = "正在保存...";
+
+          // 获取当前工作簿
+          const workbook = univer
+            .__getInjector()
+            .get(IUniverInstanceService)
+            .getCurrentUnitForType(UniverInstanceType.UNIVER_SHEET);
+
+          if (!workbook) {
+            throw new Error("未找到工作簿");
+          }
+
+          // 获取快照
+          const snapshot = workbook.getSnapshot();
+
+          // 发送到服务器
+          const response = await fetch("/api/workbook", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(snapshot),
+          });
+
+          if (!response.ok) {
+            throw new Error("保存失败");
+          }
+
+          updateTime(saveTime);
+          workbookStatus.textContent = "已保存";
+          showNotification("工作簿已保存到服务器", "success");
+        } catch (error) {
+          console.error("保存工作簿失败:", error);
+          workbookStatus.textContent = "保存失败";
+          showNotification(`保存失败: ${error.message}`, "error");
+        }
+      }
+
+      // 检查服务器状态
+      async function checkServerStatus() {
+        try {
+          const response = await fetch("/api/status");
+          if (!response.ok) {
+            throw new Error("服务器状态检查失败");
+          }
+
+          const status = await response.json();
+          serverStatus.textContent = status.status;
+          serverVersion.textContent = status.version;
+          serverWorkbook.textContent = status.workbookLoaded
+            ? "已加载"
+            : "未加载";
+
+          showNotification("服务器状态正常", "info");
+        } catch (error) {
+          console.error("检查服务器状态失败:", error);
+          serverStatus.textContent = "离线";
+          showNotification("无法连接到服务器", "error");
+        }
+      }
+
+      // 事件监听器
+      document.addEventListener("DOMContentLoaded", () => {
+        // 初始化默认工作簿
+        workbookInstance = initDefaultWorkbook();
+        renderWorkbook();
+
+        // 设置事件监听器
+        loadBtn.addEventListener("click", loadWorkbookFromServer);
+        saveBtn.addEventListener("click", saveWorkbookToServer);
+        resetBtn.addEventListener("click", () => {
+          workbookInstance.dispose();
+          workbookInstance = initDefaultWorkbook();
+          renderWorkbook();
+          workbookStatus.textContent = "已重置";
+          showNotification("工作簿已重置", "info");
+        });
+        statusBtn.addEventListener("click", checkServerStatus);
+      });
+    </script>
+  </body>
+</html>

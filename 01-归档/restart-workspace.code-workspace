@@ -1,0 +1,51 @@
+{
+  "folders": [
+    {
+      "name": "vite-first",
+      "path": "vite-first"
+    },
+    {
+      "name": "univer-first",
+      "path": "univer-first"
+    },
+    {
+      "name": "univer-basic-via-preset",
+      "path": "univer-basic-via-preset"
+    },
+    {
+      "name": "univer-pro-sheet-start-kit-main",
+      "path": "univer-pro-sheet-start-kit-main"
+    },
+    {
+      "name": "univer-first-plugin",
+      "path": "univer-first-plugin"
+    },
+    {
+      "name": "univer-save-json",
+      "path": "univer-save-json"
+    },
+    {
+      "name": "express-first",
+      "path": "express-first"
+    },
+    {
+      "name": "univer-by-express",
+      "path": "univer-by-express"
+    },
+    {
+      "name": "express-univer-app",
+      "path": "express-univer-app"
+    },
+    {
+      "name": "univer-cscn-vite",
+      "path": "univer-cscn-vite"
+    },
+    {
+      "name": "univer-cscn-express",
+      "path": "univer-cscn-express"
+    }
+  ],
+  "settings": {
+    "terminal.integrated.copyOnSelection": true
+  }
+}

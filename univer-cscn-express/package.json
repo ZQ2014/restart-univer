@@ -1,0 +1,21 @@
+{
+  "name": "univer-cscn-express",
+  "version": "1.0.0",
+  "description": "CSCN的Univer后端服务器",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.2.0",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}

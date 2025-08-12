@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON 数据管理器</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --primary-dark: #3a56d4;
+        --secondary: #06d6a0;
+        --dark: #1e293b;
+        --light: #f8fafc;
+        --gray: #94a3b8;
+        --danger: #ef4444;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --border: #cbd5e1;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --radius: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        line-height: 1.6;
+        color: var(--dark);
+        background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      .app-card {
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        padding: 1.5rem 2rem;
+        text-align: center;
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .logo-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-icon i {
+        font-size: 2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .content {
+        padding: 2rem;
+      }
+
+      .input-section {
+        background: var(--light);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--dark);
+      }
+
+      .section-title i {
+        color: var(--primary);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--dark);
+      }
+
+      .input-group {
+        position: relative;
+        display: flex;
+      }
+
+      input {
+        flex: 1;
+        padding: 0.9rem 1rem 0.9rem 3.5rem;
+        border: 1px solid var(--border);
+        border-radius: 8px 0 0 8px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray);
+        font-size: 1.25rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.9rem 1.5rem;
+        border-radius: 0 8px 8px 0;
+        border: none;
+        font-weight: 500;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        gap: 0.75rem;
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(67, 97, 238, 0.4);
+      }
+
+      .btn i {
+        font-size: 1.1rem;
+      }
+
+      .data-section {
+        background: white;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+      }
+
+      .data-header {
+        padding: 1rem 1.5rem;
+        background: var(--light);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .data-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(59, 130, 246, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-weight: 500;
+        color: var(--primary-dark);
+      }
+
+      .data-body {
+        padding: 1.5rem;
+      }
+
+      .json-editor {
+        width: 100%;
+        min-height: 300px;
+        padding: 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-family: "Fira Code", "Courier New", monospace;
+        resize: vertical;
+        background: #f8fafc;
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
+
+      .json-editor:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+      }
+
+      .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn-update {
+        background: linear-gradient(135deg, var(--success) 0%, #0d9f6e 100%);
+      }
+
+      .btn-reset {
+        background: linear-gradient(135deg, var(--gray) 0%, #7c8ba1 100%);
+      }
+
+      .btn-refresh {
+        background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+      }
+
+      .status-section {
+        padding: 1.5rem;
+        background: var(--light);
+        border-radius: var(--radius);
+      }
+
+      .status {
+        padding: 1.25rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 1.05rem;
+      }
+
+      .status-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .status-content {
+        flex: 1;
+      }
+
+      .status-title {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .status-message {
+        font-size: 0.95rem;
+      }
+
+      .status-success {
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+      }
+
+      .status-success .status-icon {
+        color: #16a34a;
+      }
+
+      .status-error {
+        background: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+      }
+
+      .status-error .status-icon {
+        color: #dc2626;
+      }
+
+      .status-info {
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1px solid #bfdbfe;
+      }
+
+      .status-info .status-icon {
+        color: #3b82f6;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 2rem;
+        color: var(--gray);
+        font-size: 0.95rem;
+      }
+
+      /* 加载动画 */
+      .loader {
+        display: inline-block;
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .action-buttons {
+          grid-template-columns: 1fr;
+        }
+
+        .content {
+          padding: 1.5rem;
+        }
+
+        header {
+          padding: 1rem 1.5rem;
+        }
+
+        h1 {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="app-card">
+        <header>
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="fas fa-database"></i>
+            </div>
+          </div>
+          <h1>JSON 数据管理器</h1>
+          <p class="subtitle">获取、编辑和更新用户JSON数据</p>
+        </header>
+
+        <div class="content">
+          <div class="input-section">
+            <div class="section-title">
+              <i class="fas fa-user"></i>
+              <span>用户信息</span>
+            </div>
+
+            <div class="form-group">
+              <label for="userIdInput">用户ID</label>
+              <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input
+                  type="text"
+                  id="userIdInput"
+                  placeholder="输入用户ID (如: zq)"
+                  required
+                  pattern="[a-zA-Z0-9-]{2,20}"
+                  title="用户ID应为2-20个字符，只允许字母、数字和短横线"
+                />
+                <button class="btn" id="fetchBtn">
+                  <i class="fas fa-download"></i>
+                  获取数据
+                </button>
+              </div>
+            </div>
+
+            <div id="statusInfo" class="status status-info hidden">
+              <div class="status-icon">
+                <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="status-content">
+                <div class="status-title">操作说明</div>
+                <div class="status-message">
+                  输入用户ID并点击"获取数据"按钮加载JSON数据。编辑后点击"更新数据"保存更改。
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="data-section">
+            <div class="data-header">
+              <div class="data-title">JSON 数据</div>
+              <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="currentUserId">未选择用户</span>
+              </div>
+            </div>
+
+            <div class="data-body">
+              <textarea
+                class="json-editor"
+                id="jsonEditor"
+                placeholder='{"message": "请先获取用户数据"}'
+                spellcheck="false"
+                readonly
+              ></textarea>
+
+              <div class="action-buttons">
+                <button class="btn btn-update" id="updateBtn">
+                  <i class="fas fa-save"></i>
+                  更新数据
+                </button>
+                <button class="btn btn-reset" id="resetBtn">
+                  <i class="fas fa-undo"></i>
+                  重置更改
+                </button>
+                <button class="btn btn-refresh" id="refreshBtn">
+                  <i class="fas fa-sync"></i>
+                  刷新数据
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="statusMessage" class="status hidden">
+            <div class="status-icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="status-content">
+              <div class="status-title">状态</div>
+              <div class="status-message">等待操作...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>JSON 数据服务 &copy; 2023 | 基于 Express 构建</p>
+      </footer>
+    </div>
+
+    <script>
+      // DOM 元素
+      const userIdInput = document.getElementById("userIdInput");
+      const fetchBtn = document.getElementById("fetchBtn");
+      const jsonEditor = document.getElementById("jsonEditor");
+      const updateBtn = document.getElementById("updateBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const refreshBtn = document.getElementById("refreshBtn");
+      const currentUserId = document.getElementById("currentUserId");
+      const statusMessage = document.getElementById("statusMessage");
+      const statusInfo = document.getElementById("statusInfo");
+
+      // 状态变量
+      let currentUser = null;
+      let originalData = null;
+      let currentData = null;
+
+      // 页面加载时显示操作说明
+      window.addEventListener("DOMContentLoaded", () => {
+        statusInfo.classList.remove("hidden");
+        userIdInput.focus();
+      });
+
+      // 获取数据按钮事件
+      fetchBtn.addEventListener("click", async () => {
+        const userId = userIdInput.value.trim();
+
+        if (!userId) {
+          showStatus("请输入用户ID", "error");
+          return;
+        }
+
+        // 验证用户ID格式
+        if (!/^[a-zA-Z0-9-]{2,20}$/.test(userId)) {
+          showStatus(
+            "用户ID格式无效。请使用2-20个字符（字母、数字、短横线）",
+            "error"
+          );
+          return;
+        }
+
+        try {
+          // 显示加载状态
+          fetchBtn.innerHTML = '<div class="loader"></div> 获取中...';
+          fetchBtn.disabled = true;
+
+          // 获取用户数据
+          const response = await fetch(`/${userId}`);
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new Error("用户数据不存在，已创建空JSON文件");
+            }
+            throw new Error(
+              `请求失败: ${response.status} ${response.statusText}`
+            );
+          }
+
+          const data = await response.json();
+
+          // 更新UI
+          currentUser = userId;
+          originalData = data;
+          currentData = data;
+
+          currentUserId.textContent = userId;
+          jsonEditor.value = JSON.stringify(data, null, 2);
+          jsonEditor.removeAttribute("readonly");
+
+          showStatus("数据获取成功", "success");
+        } catch (error) {
+          // 处理错误情况
+          if (error.message.includes("已创建空JSON文件")) {
+            // 新用户 - 创建空JSON
+            currentUser = userId;
+            originalData = {};
+            currentData = {};
+
+            currentUserId.textContent = userId;
+            jsonEditor.value = JSON.stringify({}, null, 2);
+            jsonEditor.removeAttribute("readonly");
+
+            showStatus(error.message, "info");
+          } else {
+            showStatus(`获取数据失败: ${error.message}`, "error");
+          }
+        } finally {
+          // 重置按钮状态
+          fetchBtn.innerHTML = '<i class="fas fa-download"></i> 获取数据';
+          fetchBtn.disabled = false;
+        }
+      });
+
+      // 更新数据按钮事件
+      updateBtn.addEventListener("click", async () => {
+        if (!currentUser) {
+          showStatus("请先获取用户数据", "error");
+          return;
+        }
+
+        try {
+          // 验证JSON格式
+          const newData = JSON.parse(jsonEditor.value);
+
+          // 显示加载状态
+          updateBtn.innerHTML = '<div class="loader"></div> 更新中...';
+          updateBtn.disabled = true;
+
+          // 发送更新请求
+          const response = await fetch("/update", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: currentUser,
+              data: newData,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success) {
+            // 更新成功
+            originalData = newData;
+            currentData = newData;
+            showStatus("数据更新成功", "success");
+          } else {
+            showStatus(`更新失败: ${result.message || "未知错误"}`, "error");
+          }
+        } catch (error) {
+          showStatus(`无效的JSON格式: ${error.message}`, "error");
+        } finally {
+          // 重置按钮状态
+          updateBtn.innerHTML = '<i class="fas fa-save"></i> 更新数据';
+          updateBtn.disabled = false;
+        }
+      });
+
+      // 重置按钮事件
+      resetBtn.addEventListener("click", () => {
+        if (!currentUser) return;
+
+        jsonEditor.value = JSON.stringify(originalData, null, 2);
+        currentData = originalData;
+        showStatus("已重置为原始数据", "info");
+      });
+
+      // 刷新按钮事件
+      refreshBtn.addEventListener("click", async () => {
+        if (!currentUser) {
+          showStatus("请先获取用户数据", "error");
+          return;
+        }
+
+        try {
+          // 显示加载状态
+          refreshBtn.innerHTML = '<div class="loader"></div> 刷新中...';
+          refreshBtn.disabled = true;
+
+          // 重新获取数据
+          const response = await fetch(`/${currentUser}`);
+
+          if (!response.ok) {
+            throw new Error(
+              `请求失败: ${response.status} ${response.statusText}`
+            );
+          }
+
+          const data = await response.json();
+
+          // 更新数据
+          originalData = data;
+          currentData = data;
+          jsonEditor.value = JSON.stringify(data, null, 2);
+
+          showStatus("数据刷新成功", "success");
+        } catch (error) {
+          showStatus(`刷新数据失败: ${error.message}`, "error");
+        } finally {
+          // 重置按钮状态
+          refreshBtn.innerHTML = '<i class="fas fa-sync"></i> 刷新数据';
+          refreshBtn.disabled = false;
+        }
+      });
+
+      // 显示状态消息
+      function showStatus(message, type) {
+        // 更新状态消息
+        const statusTitle = statusMessage.querySelector(".status-title");
+        const statusMsg = statusMessage.querySelector(".status-message");
+        const statusIcon = statusMessage.querySelector(".status-icon i");
+
+        // 设置消息内容
+        statusMsg.textContent = message;
+
+        // 设置消息类型
+        statusMessage.className = "status";
+        statusIcon.className = "fas fa-info-circle";
+
+        switch (type) {
+          case "success":
+            statusMessage.classList.add("status-success");
+            statusIcon.className = "fas fa-check-circle";
+            statusTitle.textContent = "操作成功";
+            break;
+          case "error":
+            statusMessage.classList.add("status-error");
+            statusIcon.className = "fas fa-exclamation-circle";
+            statusTitle.textContent = "发生错误";
+            break;
+          case "info":
+            statusMessage.classList.add("status-info");
+            statusTitle.textContent = "信息";
+            break;
+          default:
+            statusMessage.classList.add("status-info");
+            statusTitle.textContent = "状态";
+        }
+
+        // 显示状态消息
+        statusMessage.classList.remove("hidden");
+
+        // 5秒后自动隐藏
+        setTimeout(() => {
+          statusMessage.classList.add("hidden");
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>

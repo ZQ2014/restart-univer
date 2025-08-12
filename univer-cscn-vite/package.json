@@ -1,0 +1,23 @@
+{
+  "name": "univer-cscn-vite",
+  "private": true,
+  "version": "0.0.0",
+  "description": "CSCN的Univer前端服务器",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "^7.1.0"
+  },
+  "dependencies": {
+    "@univerjs/preset-sheets-core": "^0.10.3",
+    "@univerjs/presets": "^0.10.3",
+    "@univerjs/sheets-crosshair-highlight": "^0.10.3",
+    "@univerjs/sheets-zen-editor": "^0.10.3",
+    "@univerjs/watermark": "^0.10.3"
+  }
+}
