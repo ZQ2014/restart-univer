@@ -25,10 +25,10 @@ const { univer, univerAPI } = createUniver({
     }),
   ],
   plugins: [
-    // FirstPlugin, // 注册自定义插件
+    FirstPlugin, // 注册自定义插件
   ],
 });
 
-univer.registerPlugin(FirstPlugin); // 注册自定义插件
+// univer.registerPlugin(FirstPlugin); // 注册自定义插件
 
 univerAPI.createWorkbook({});

@@ -12,7 +12,7 @@ class FirstPlugin extends Plugin {
     @Inject(Injector) override readonly _injector: Injector
   ) {
     super();
-    console.log("FirstPlugin:onStarting");
+    console.log("FirstPlugin:constructor");
   }
 
   override onStarting(): void {
