@@ -16,7 +16,7 @@ import {
   RibbonStartGroup,
 } from "@univerjs/presets/preset-sheets-core";
 
-const CSCN_SAVE_JSON_BUTTON = "cscn.button.save_json";
+const happyq_SAVE_JSON_BUTTON = "happyq.button.save_json";
 
 /**
  * 保存JSON文件插件
@@ -24,7 +24,7 @@ const CSCN_SAVE_JSON_BUTTON = "cscn.button.save_json";
  */
 class SaveJsonPlugin extends Plugin {
   static override type = UniverInstanceType.UNIVER_SHEET;
-  static override pluginName = CSCN_SAVE_JSON_BUTTON;
+  static override pluginName = happyq_SAVE_JSON_BUTTON;
 
   constructor(
     _config: null,
@@ -56,13 +56,13 @@ class SaveJsonPlugin extends Plugin {
     // 定义保存命令
     const command: ICommand = {
       type: CommandType.OPERATION, // 不会改变快照数据的命令
-      id: CSCN_SAVE_JSON_BUTTON, // 命令的唯一ID，在整个程序中必须唯一
+      id: happyq_SAVE_JSON_BUTTON, // 命令的唯一ID，在整个程序中必须唯一
       handler: () => this.saveSnapshot(), // 执行保存操作的函数
     };
 
     // 生成菜单项的工厂
     const menuItemFactory = () => ({
-      id: CSCN_SAVE_JSON_BUTTON, // 关联按键与图标、命令的依据
+      id: happyq_SAVE_JSON_BUTTON, // 关联按键与图标、命令的依据
       title: "保存",
       tooltip: "将数据保存为JSON文件",
       icon: "SaveIcon",
@@ -72,7 +72,7 @@ class SaveJsonPlugin extends Plugin {
     // 添加工具栏按钮
     this.menuManagerService.mergeMenu({
       [RibbonStartGroup.OTHERS]: {
-        [CSCN_SAVE_JSON_BUTTON]: {
+        [happyq_SAVE_JSON_BUTTON]: {
           order: 10,
           menuItemFactory,
         },
@@ -130,10 +130,10 @@ class SaveJsonPlugin extends Plugin {
         URL.revokeObjectURL(url);
       }, 100);
 
-      console.log("成功将workshop数据导出为JSON文件");
+      console.log("成功将workbook数据导出为JSON文件");
       return true;
     } catch (error) {
-      console.error("将workshop数据导出为JSON文件失败:", error);
+      console.error("将workbook数据导出为JSON文件失败:", error);
       return false;
     }
   }

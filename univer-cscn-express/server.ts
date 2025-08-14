@@ -25,7 +25,7 @@ let dataService: IDataService;
 const dataServiceType = "file";
 
 // 1. 获取用户数据：GET
-app.get("/api/cscn/data/:userid", async (req, res) => {
+app.get("/api/happyq/data/:userid", async (req, res) => {
   console.log(
     `————————————————————————————————————————————————————————————————————————————————————`
   );
@@ -69,7 +69,7 @@ app.get("/api/cscn/data/:userid", async (req, res) => {
 });
 
 // 2. 更新数据：POST
-app.post("/api/cscn/data/:userid", async (req, res) => {
+app.post("/api/happyq/data/:userid", async (req, res) => {
   console.log(
     `————————————————————————————————————————————————————————————————————————————————————`
   );
@@ -128,10 +128,10 @@ const startServer = async () => {
     console.log(`  - 测试页面: http://localhost:${PORT}/test`);
     console.log(`  - Univer页面: http://localhost:${PORT}/univer`);
     console.log(
-      `  - 获取用户数据: GET http://localhost:${PORT}/api/cscn/data/:userid`
+      `  - 获取用户数据: GET http://localhost:${PORT}/api/happyq/data/:userid`
     );
     console.log(
-      `  - 更新数据: POST http://localhost:${PORT}/api/cscn/data/:userid`
+      `  - 更新数据: POST http://localhost:${PORT}/api/happyq/data/:userid`
     );
     console.log(
       `————————————————————————————————————————————————————————————————————————————————————`

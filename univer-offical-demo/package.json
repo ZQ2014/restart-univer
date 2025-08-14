@@ -1,8 +1,7 @@
 {
-  "name": "univer-happyq-vite",
+  "name": "univer-offical-demo",
   "private": true,
   "version": "0.0.0",
-  "description": "happyq的Univer前端服务器",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -14,10 +13,8 @@
     "vite": "^7.1.0"
   },
   "dependencies": {
+    "@types/lodash-es": "^4.17.12",
     "@univerjs/preset-sheets-core": "^0.10.3",
-    "@univerjs/presets": "^0.10.3",
-    "@univerjs/sheets-crosshair-highlight": "^0.10.3",
-    "@univerjs/sheets-zen-editor": "^0.10.3",
-    "@univerjs/watermark": "^0.10.3"
+    "@univerjs/presets": "^0.10.3"
   }
 }

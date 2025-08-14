@@ -37,12 +37,12 @@
       "path": "express-univer-app"
     },
     {
-      "name": "univer-cscn-vite",
-      "path": "univer-cscn-vite"
+      "name": "univer-happyq-vite",
+      "path": "univer-happyq-vite"
     },
     {
-      "name": "univer-cscn-express",
-      "path": "univer-cscn-express"
+      "name": "univer-happyq-express",
+      "path": "univer-happyq-express"
     }
   ],
   "settings": {

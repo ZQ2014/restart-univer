@@ -47,7 +47,7 @@
 // // };
 
 // // 1. 获取用户数据：GET /:userid
-// app.get("/api/cscn/data/:userid", async (req, res) => {
+// app.get("/api/happyq/data/:userid", async (req, res) => {
 //   try {
 //     const userId = req.params.userid;
 //     console.log("【Get】" + userId);
@@ -110,7 +110,7 @@
 // });
 
 // // 2. 更新数据：POST /update
-// app.post("/api/cscn/data/:userid", async (req, res) => {
+// app.post("/api/happyq/data/:userid", async (req, res) => {
 //   try {
 //     const userId = req.params.userid;
 //     const data = req.body;
@@ -165,10 +165,10 @@
 //     console.log(`  - 测试页面: http://localhost:${PORT}/test`);
 //     console.log(`  - Univer页面: http://localhost:${PORT}/univer`);
 //     console.log(
-//       `  - 获取用户数据: GET http://localhost:${PORT}/api/cscn/data/:userid`
+//       `  - 获取用户数据: GET http://localhost:${PORT}/api/happyq/data/:userid`
 //     );
 //     console.log(
-//       `  - 更新数据: POST http://localhost:${PORT}/api/cscn/data/:userid`
+//       `  - 更新数据: POST http://localhost:${PORT}/api/happyq/data/:userid`
 //     );
 //   });
 // };

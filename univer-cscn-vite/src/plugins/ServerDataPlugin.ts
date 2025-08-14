@@ -16,7 +16,7 @@ import {
   RibbonStartGroup,
 } from "@univerjs/presets/preset-sheets-core";
 
-const CSCN_UPDATE_BUTTON = "cscn.button.update-server-data/template";
+const happyq_UPDATE_BUTTON = "happyq.button.update-server-data/template";
 
 /**
  * 更新按键插件
@@ -25,11 +25,10 @@ const CSCN_UPDATE_BUTTON = "cscn.button.update-server-data/template";
  */
 class ServerDataPlugin extends Plugin {
   static override type = UniverInstanceType.UNIVER_SHEET;
-  static override pluginName = CSCN_UPDATE_BUTTON;
+  static override pluginName = happyq_UPDATE_BUTTON;
 
   constructor(
     _config: null,
-    // 构造函数必须注入的“注入器”
     // 可通过this._injector.get(IUniverInstanceService)可以获取对应的服务
     @Inject(Injector) readonly _injector: Injector,
     // 注入获取当前Univer实例的服务
@@ -45,7 +44,7 @@ class ServerDataPlugin extends Plugin {
     private readonly componentManager: ComponentManager
   ) {
     super();
-    console.log("UpdatePlugin:onStarting");
+    console.log("UpdatePlugin:constructor");
   }
 
   override onStarting(): void {
@@ -53,29 +52,29 @@ class ServerDataPlugin extends Plugin {
 
     // 注册图标组建
     this.disposeWithMe(
-      this.componentManager.register(CSCN_UPDATE_BUTTON, CloudOutlineIcon)
+      this.componentManager.register(happyq_UPDATE_BUTTON, CloudOutlineIcon)
     );
 
     // 定义保存命令
     const command: ICommand = {
       type: CommandType.OPERATION, // 不会改变快照数据的命令
-      id: CSCN_UPDATE_BUTTON, // 命令的唯一ID，在整个程序中必须唯一
+      id: happyq_UPDATE_BUTTON, // 命令的唯一ID，在整个程序中必须唯一
       handler: () => this.updateByUserid(), // 执行保存操作的函数
     };
 
     // 生成菜单项的工厂
     const menuItemFactory = () => ({
-      id: CSCN_UPDATE_BUTTON, // 关联按键与图标、命令的依据
+      id: happyq_UPDATE_BUTTON, // 关联按键与图标、命令的依据
       title: "更新",
       tooltip: "更新服务端数据",
-      icon: CSCN_UPDATE_BUTTON,
+      icon: happyq_UPDATE_BUTTON,
       type: MenuItemType.BUTTON,
     });
 
     // 添加工具栏按钮
     this.menuManagerService.mergeMenu({
       [RibbonStartGroup.OTHERS]: {
-        [CSCN_UPDATE_BUTTON]: {
+        [happyq_UPDATE_BUTTON]: {
           order: 10,
           menuItemFactory,
         },
@@ -98,49 +97,7 @@ class ServerDataPlugin extends Plugin {
     console.log("UpdatePlugin:onSteady");
   }
 
-  private async updateByUserid() {
-    // 获取当前活动的Sheet类型的工作簿
-    const workbook = this.univerInstanceService.getCurrentUnitOfType<Workbook>(
-      UniverInstanceType.UNIVER_SHEET
-    );
-
-    if (!workbook) {
-      console.error("未找到活动的工作簿");
-      return false;
-    }
-
-    try {
-      if
-
-      // 获取工作簿快照
-      const snapshot = workbook.getSnapshot();
-
-      // 转换为JSON
-      const jsonData = JSON.stringify(snapshot, null, 2);
-
-      // 创建下载
-      const blob = new Blob([jsonData], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `workbook-snapshot-${Date.now()}.json`;
-      document.body.appendChild(a);
-      a.click();
-
-      // 清理
-      setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 100);
-
-      console.log("成功将workshop数据导出为JSON文件");
-      return true;
-    } catch (error) {
-      console.error("将workshop数据导出为JSON文件失败:", error);
-      return false;
-    }
-  }
+  private async updateByUserid() {}
 }
 
 export default ServerDataPlugin;

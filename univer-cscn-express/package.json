@@ -1,7 +1,7 @@
 {
-  "name": "univer-cscn-express",
+  "name": "univer-happyq-express",
   "version": "1.0.0",
-  "description": "CSCN的Univer后端服务器",
+  "description": "happyq的Univer后端服务器",
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSCN Univer Express测试页面</title>
+    <title>happyq Univer Express测试页面</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -389,7 +389,7 @@
               <i class="fas fa-database"></i>
             </div>
           </div>
-          <h1>CSCN的Univer后端服务器测试页</h1>
+          <h1>happyq的Univer后端服务器测试页</h1>
           <p class="subtitle">测试获取和更新数据</p>
         </header>
 
@@ -533,7 +533,7 @@
           fetchBtn.disabled = true;
 
           // 获取用户数据
-          const response = await fetch(`/api/cscn/data/${userId}`);
+          const response = await fetch(`/api/happyq/data/${userId}`);
 
           if (!response.ok) {
             if (response.status === 404) {
@@ -601,7 +601,7 @@
           updateBtn.disabled = true;
 
           // 发送更新请求
-          const response = await fetch(`/api/cscn/data/${userId}`, {
+          const response = await fetch(`/api/happyq/data/${userId}`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
