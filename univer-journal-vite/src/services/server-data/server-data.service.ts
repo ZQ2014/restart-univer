@@ -64,11 +64,6 @@ export abstract class ServerDataService
   extends Disposable
   implements IServerDataService
 {
-  // 数据服务器的URL
-  protected static readonly DATA_SERVER_URL = "/api/happyq/data";
-  // 更新模板的userid
-  protected static readonly UPDATE_TEMPLATE_ID = "Template";
-
   // 当前访问用户的类型
   protected readonly _type: OperationType;
   // 是否正在进行更新操作

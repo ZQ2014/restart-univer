@@ -31,7 +31,7 @@ import SheetsZenEditorZhCN from "@univerjs/sheets-zen-editor/locale/zh-CN";
 // import { UniverWatermarkPlugin } from "@univerjs/watermark";
 
 import { ServerDataService } from "./services/server-data/server-data.service";
-import ServerDataPlugin from "./plugins/ServerDataPlugin";
+import ServerDataPlugin from "./plugins/server-data.plugin";
 
 import "./style.css";
 import "@univerjs/preset-sheets-core/lib/index.css";

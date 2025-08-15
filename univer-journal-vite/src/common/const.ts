@@ -62,4 +62,4 @@
 // export const MESSAGE_OFFICAL_DEMO = "happyq.message.offical-demo";
 
 /* config key */
-export const CONFIG_JOURNAL_VITE = "happyq.journal.vite.config";
+export const CONFIG_JOURNAL_UNIVER = "happyq.journal.univer.config";
