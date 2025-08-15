@@ -6,7 +6,7 @@ import {
   RangeLoadingComponent,
   RangePopupComponent,
   SaveSingleComponent,
-} from "../Components/offical-demo.components";
+} from "../components/offical-demo.components";
 
 /* plugin name */
 export const PLUGIN_SIMPLE_DEMO = "happyq.plugin.simple-demo";

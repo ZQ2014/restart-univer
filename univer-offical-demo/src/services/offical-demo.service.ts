@@ -44,7 +44,7 @@ export interface IOfficalDemoService {
   openSidebar(params: any): boolean;
   openDialog(params: any): boolean;
   openConfirm(params: any): boolean;
-  showNatification(params: any): boolean;
+  showNotification(params: any): boolean;
   showMessage(params: any): boolean;
   canvasOperation(params: any): boolean;
   showRangeSelectorDialog(params: any): Promise<IUnitRangeName[]>;
@@ -357,10 +357,10 @@ export default class OfficalDemoService
     return null !== confirm;
   }
 
-  showNatification(params: any): boolean {
+  showNotification(params: any): boolean {
     this._logService.log(
       "[OfficalDemoService]",
-      "showNatification",
+      "showNotification",
       params,
       this._actionCounter
     );

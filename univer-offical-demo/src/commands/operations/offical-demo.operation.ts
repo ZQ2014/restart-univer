@@ -77,7 +77,7 @@ export const DropdownListThirdItemOperation: ICommand = {
       params
     );
 
-    const sucess = accessor.get(IOfficalDemoService).showNatification(params);
+    const sucess = accessor.get(IOfficalDemoService).showNotification(params);
     logService.log("[DropdownListThirdItemOperation]", "return：", sucess);
     return sucess;
   },

@@ -49,6 +49,7 @@ export class SimpleDemoPlugin extends Plugin {
     const { ...rest } = merge({}, defaultSimpleDemConfig, this._config);
     this._configService.setConfig(SIMPLE_DEMO_CONFIG_KEY, rest);
 
+    // 加载国际化配置
     this._localeService.load({
       enUS,
       zhCN,
