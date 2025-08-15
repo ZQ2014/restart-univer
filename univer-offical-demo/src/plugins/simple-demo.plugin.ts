@@ -36,9 +36,9 @@ export class SimpleDemoPlugin extends Plugin {
     // 可通过this._injector.get(IUniverInstanceService)可以获取对应的模块
     @Inject(Injector) readonly _injector: Injector,
     // 注入日志服务
-    @ILogService private readonly _logService: ILogService,
+    @Inject(ILogService) private readonly _logService: ILogService,
     // 注入配置服务（可选）
-    @IConfigService private readonly _configService: IConfigService,
+    @Inject(IConfigService) private readonly _configService: IConfigService,
     // 注入国际化服务
     @Inject(LocaleService) private readonly _localeService: LocaleService
   ) {

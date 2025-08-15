@@ -14,7 +14,7 @@ export interface IModificationRecordService {
  * 一个最基本的Service实现示例。
  * Service主要用于处理业务逻辑
  */
-export class ModificationRecordService
+export default class ModificationRecordService
   extends Disposable
   implements IModificationRecordService
 {

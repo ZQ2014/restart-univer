@@ -24,7 +24,7 @@ const happyq_UPDATE_BUTTON = "happyq.button.update-server-data/template";
  * 对于普通用户ID，根据用户修改历史更新数据库数据
  * 对于“Template”用户ID，更新基础模板的JSON文件
  */
-class ServerDataPlugin extends Plugin {
+export class ServerDataController extends Plugin {
   static override type = UniverInstanceType.UNIVER_SHEET;
   static override pluginName = happyq_UPDATE_BUTTON;
 
@@ -102,5 +102,3 @@ class ServerDataPlugin extends Plugin {
 
   private async updateByUserid() {}
 }
-
-export default ServerDataPlugin;

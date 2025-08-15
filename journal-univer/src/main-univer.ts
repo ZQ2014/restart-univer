@@ -30,10 +30,8 @@ import SheetsZenEditorZhCN from "@univerjs/sheets-zen-editor/locale/zh-CN";
 // 隐藏水印插件的导入
 // import { UniverWatermarkPlugin } from "@univerjs/watermark";
 
-import { ServerDataService } from "./services/server-data/server-data.service";
-import ServerDataPlugin from "./plugins/server-data.plugin";
-
 import "./style.css";
+
 import "@univerjs/preset-sheets-core/lib/index.css";
 import "@univerjs/preset-sheets-sort/lib/index.css";
 import "@univerjs/preset-sheets-filter/lib/index.css";

@@ -1,6 +1,5 @@
-// /* plugin name */
-// export const PLUGIN_SIMPLE_DEMO = "happyq.plugin.simple-demo";
-// export const PLUGIN_UNIVER_OFFICAL_DEMO = "happyq.plugin.univer-offical-demo";
+/* plugin name */
+export const PLUGIN_SERVER_DATA = "happyq.plugin.server-data";
 
 // /* components name */
 // export const COMPONENT_HELLO = "happyq.component.hello";
