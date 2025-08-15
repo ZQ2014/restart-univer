@@ -15,9 +15,9 @@
   "dependencies": {
     "@univerjs/preset-sheets-core": "^0.10.3",
     "@univerjs/presets": "^0.10.3",
-    "@univerjs/sheets-crosshair-highlight": "^0.10.4",
-    "@univerjs/sheets-zen-editor": "^0.10.4",
-    "@univerjs/uniscript": "^0.10.4",
-    "@univerjs/watermark": "^0.10.4"
+    "@univerjs/sheets-crosshair-highlight": "^0.10.3",
+    "@univerjs/sheets-zen-editor": "^0.10.3",
+    "@univerjs/uniscript": "^0.10.3",
+    "@univerjs/watermark": "^0.10.3"
   }
 }

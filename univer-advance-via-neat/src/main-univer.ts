@@ -30,7 +30,6 @@ import SheetsZenEditorZhCN from "@univerjs/sheets-zen-editor/locale/zh-CN";
 import "@univerjs/sheets-zen-editor/facade";
 import { UniverUniscriptPlugin } from "@univerjs/uniscript";
 import UniscriptZhCN from "@univerjs/uniscript/locale/zh-CN";
-
 import {
   createUniver,
   LocaleType,
@@ -52,8 +51,8 @@ import "@univerjs/sheets-crosshair-highlight/lib/index.css";
 import "@univerjs/sheets-zen-editor/lib/index.css";
 import "@univerjs/uniscript/lib/index.css";
 
-import "./style.css";
 import { WORKBOOK_DATA } from "./data";
+import "./style.css";
 
 const { univer, univerAPI } = createUniver({
   locale: LocaleType.ZH_CN,
