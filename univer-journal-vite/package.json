@@ -1,8 +1,8 @@
 {
-  "name": "univer-happyq-vite",
+  "name": "journal-univer",
   "private": true,
   "version": "0.0.0",
-  "description": "happyq的Univer前端服务器",
+  "description": "“一本账”的Univer前端服务器",
   "type": "module",
   "scripts": {
     "dev": "vite",

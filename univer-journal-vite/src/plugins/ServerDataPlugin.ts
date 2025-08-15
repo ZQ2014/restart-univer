@@ -15,6 +15,7 @@ import {
   MenuItemType,
   RibbonStartGroup,
 } from "@univerjs/presets/preset-sheets-core";
+import { ServerDataService } from "../services/server-data/server-data.service";
 
 const happyq_UPDATE_BUTTON = "happyq.button.update-server-data/template";
 
@@ -49,6 +50,8 @@ class ServerDataPlugin extends Plugin {
 
   override onStarting(): void {
     console.log("UpdatePlugin:onStarting");
+
+    this._injector.add(ServerDataService.createServerDataService("Template"));
 
     // 注册图标组建
     this.disposeWithMe(

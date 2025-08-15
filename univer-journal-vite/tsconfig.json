@@ -24,5 +24,5 @@
     "experimentalDecorators": true // 允许使用装饰器
   },
 
-  "include": ["src", "../univer-save-json/src/plugins/import-csv-button.ts"]
+  "include": ["src"]
 }

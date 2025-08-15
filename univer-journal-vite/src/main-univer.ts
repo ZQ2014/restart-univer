@@ -30,7 +30,7 @@ import SheetsZenEditorZhCN from "@univerjs/sheets-zen-editor/locale/zh-CN";
 // 隐藏水印插件的导入
 // import { UniverWatermarkPlugin } from "@univerjs/watermark";
 
-import { ServerDataService } from "./services/ServerDataService";
+import { ServerDataService } from "./services/server-data/server-data.service";
 import ServerDataPlugin from "./plugins/ServerDataPlugin";
 
 import "./style.css";
@@ -105,6 +105,8 @@ const { univerAPI } = createUniver({
     ServerDataPlugin, // 自定义插件注册
   ],
 });
+
+// static WORKBOOK_DATA: Partial<IWorkbookData> = {};
 
 console.log("univerAPI.createWorkbook(WORKBOOK_DATA);");
 (async () => {
