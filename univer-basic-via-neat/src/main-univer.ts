@@ -95,26 +95,26 @@ const { univer, univerAPI } = createUniver({
   ],
   plugins: [
     // 水印插件的注册
-    [
-      UniverWatermarkPlugin,
-      {
-        textWatermarkSettings: {
-          content: "Hello, Univer!",
-          fontSize: 16,
-          color: "rgb(0,0,0)",
-          bold: false,
-          italic: false,
-          direction: "ltr",
-          x: 60,
-          y: 36,
-          repeat: true,
-          spacingX: 200,
-          spacingY: 100,
-          rotate: 0,
-          opacity: 0.15,
-        },
-      },
-    ],
+    // [
+    //   UniverWatermarkPlugin,
+    //   {
+    //     textWatermarkSettings: {
+    //       content: "Hello, Univer!",
+    //       fontSize: 16,
+    //       color: "rgb(0,0,0)",
+    //       bold: false,
+    //       italic: false,
+    //       direction: "ltr",
+    //       x: 60,
+    //       y: 36,
+    //       repeat: true,
+    //       spacingX: 200,
+    //       spacingY: 100,
+    //       rotate: 0,
+    //       opacity: 0.15,
+    //     },
+    //   },
+    // ],
     UniverSheetsCrosshairHighlightPlugin,
     UniverSheetsZenEditorPlugin,
     UniverUniscriptPlugin,

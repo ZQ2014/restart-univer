@@ -30,9 +30,6 @@ import SheetsZenEditorZhCN from "@univerjs/sheets-zen-editor/locale/zh-CN";
 import "@univerjs/sheets-zen-editor/facade";
 import { UniverUniscriptPlugin } from "@univerjs/uniscript";
 import UniscriptZhCN from "@univerjs/uniscript/locale/zh-CN";
-// Univer pro
-import { UniverSheetsAdvancedPreset } from "@univerjs/preset-sheets-advanced";
-import UniverPresetSheetsAdvancedZhCN from "@univerjs/preset-sheets-advanced/locales/zh-CN";
 import {
   createUniver,
   LocaleType,
@@ -53,8 +50,6 @@ import "@univerjs/preset-sheets-table/lib/index.css";
 import "@univerjs/sheets-crosshair-highlight/lib/index.css";
 import "@univerjs/sheets-zen-editor/lib/index.css";
 import "@univerjs/uniscript/lib/index.css";
-// Univer pro
-import "@univerjs/preset-sheets-advanced/lib/index.css";
 
 import { WORKBOOK_DATA } from "./data";
 import "./style.css";
@@ -76,9 +71,7 @@ const { univer, univerAPI } = createUniver({
       UniverPresetSheetsTableZhCN,
       SheetsCrosshairHighlightZhCN,
       SheetsZenEditorZhCN,
-      UniscriptZhCN,
-      // Univer pro
-      UniverPresetSheetsAdvancedZhCN
+      UniscriptZhCN
     ),
   },
   logLevel: LogLevel.VERBOSE,
@@ -99,31 +92,29 @@ const { univer, univerAPI } = createUniver({
     UniverSheetsThreadCommentPreset(),
     UniverSheetsNotePreset(),
     UniverSheetsTablePreset(),
-    // Univer pro
-    UniverSheetsAdvancedPreset(),
   ],
   plugins: [
     // 水印插件的注册
-    // [
-    //   UniverWatermarkPlugin,
-    //   {
-    //     textWatermarkSettings: {
-    //       content: "Hello, Univer!",
-    //       fontSize: 16,
-    //       color: "rgb(0,0,0)",
-    //       bold: false,
-    //       italic: false,
-    //       direction: "ltr",
-    //       x: 60,
-    //       y: 36,
-    //       repeat: true,
-    //       spacingX: 200,
-    //       spacingY: 100,
-    //       rotate: 0,
-    //       opacity: 0.15,
-    //     },
-    //   },
-    // ],
+    [
+      UniverWatermarkPlugin,
+      {
+        textWatermarkSettings: {
+          content: "Hello, Univer!",
+          fontSize: 16,
+          color: "rgb(0,0,0)",
+          bold: false,
+          italic: false,
+          direction: "ltr",
+          x: 60,
+          y: 36,
+          repeat: true,
+          spacingX: 200,
+          spacingY: 100,
+          rotate: 0,
+          opacity: 0.15,
+        },
+      },
+    ],
     UniverSheetsCrosshairHighlightPlugin,
     UniverSheetsZenEditorPlugin,
     UniverUniscriptPlugin,
