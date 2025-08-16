@@ -1,7 +1,8 @@
 {
-  "name": "univer-basic-via-neat",
+  "name": "journal-univer",
   "private": true,
   "version": "0.0.0",
+  "description": "“一本账”的Univer前端服务器",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,9 +16,8 @@
   "dependencies": {
     "@univerjs/preset-sheets-core": "^0.10.3",
     "@univerjs/presets": "^0.10.3",
-    "@univerjs/sheets-crosshair-highlight": "^0.10.4",
-    "@univerjs/sheets-zen-editor": "^0.10.4",
-    "@univerjs/uniscript": "^0.10.4",
-    "@univerjs/watermark": "^0.10.4"
+    "@univerjs/sheets-crosshair-highlight": "^0.10.3",
+    "@univerjs/sheets-zen-editor": "^0.10.3",
+    "@univerjs/watermark": "^0.10.3"
   }
 }

@@ -20,8 +20,8 @@ import { UniverSheetsNotePreset } from "@univerjs/preset-sheets-note";
 import UniverPresetSheetsNoteZhCN from "@univerjs/preset-sheets-note/locales/zh-CN";
 import { UniverSheetsTablePreset } from "@univerjs/preset-sheets-table";
 import UniverPresetSheetsTableZhCN from "@univerjs/preset-sheets-table/locales/zh-CN";
-import { UniverWatermarkPlugin } from "@univerjs/watermark";
-import "@univerjs/watermark/facade";
+// import { UniverWatermarkPlugin } from "@univerjs/watermark";
+// import "@univerjs/watermark/facade";
 import { UniverSheetsCrosshairHighlightPlugin } from "@univerjs/sheets-crosshair-highlight";
 import SheetsCrosshairHighlightZhCN from "@univerjs/sheets-crosshair-highlight/locale/zh-CN";
 import "@univerjs/sheets-crosshair-highlight/facade";
@@ -37,6 +37,8 @@ import {
   mergeLocales,
 } from "@univerjs/presets";
 
+// 引入自定义插件
+
 import "@univerjs/preset-sheets-core/lib/index.css";
 import "@univerjs/preset-sheets-filter/lib/index.css";
 import "@univerjs/preset-sheets-sort/lib/index.css";
@@ -51,7 +53,7 @@ import "@univerjs/sheets-crosshair-highlight/lib/index.css";
 import "@univerjs/sheets-zen-editor/lib/index.css";
 import "@univerjs/uniscript/lib/index.css";
 
-import { WORKBOOK_DATA } from "./data";
+// import { WORKBOOK_DATA } from "./data";
 import "./style.css";
 
 const { univer, univerAPI } = createUniver({
@@ -95,30 +97,31 @@ const { univer, univerAPI } = createUniver({
   ],
   plugins: [
     // 水印插件的注册
-    [
-      UniverWatermarkPlugin,
-      {
-        textWatermarkSettings: {
-          content: "Hello, Univer!",
-          fontSize: 16,
-          color: "rgb(0,0,0)",
-          bold: false,
-          italic: false,
-          direction: "ltr",
-          x: 60,
-          y: 36,
-          repeat: true,
-          spacingX: 200,
-          spacingY: 100,
-          rotate: 0,
-          opacity: 0.15,
-        },
-      },
-    ],
+    // [
+    //   UniverWatermarkPlugin,
+    //   {
+    //     textWatermarkSettings: {
+    //       content: "Hello, Univer!",
+    //       fontSize: 16,
+    //       color: "rgb(0,0,0)",
+    //       bold: false,
+    //       italic: false,
+    //       direction: "ltr",
+    //       x: 60,
+    //       y: 36,
+    //       repeat: true,
+    //       spacingX: 200,
+    //       spacingY: 100,
+    //       rotate: 0,
+    //       opacity: 0.15,
+    //     },
+    //   },
+    // ],
     UniverSheetsCrosshairHighlightPlugin,
     UniverSheetsZenEditorPlugin,
     UniverUniscriptPlugin,
+    // 引入自定义插件
   ],
 });
 
-univerAPI.createWorkbook(WORKBOOK_DATA);
+univerAPI.createWorkbook({});
