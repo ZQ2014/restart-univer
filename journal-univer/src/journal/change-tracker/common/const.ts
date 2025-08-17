@@ -1,12 +1,5 @@
 /* config key */
-export const CONFIG_KEY_SERVER_DATA = "happyq.journal.config.server-data";
-
-// /* components name */
-// export const COMPONENT_HELLO = "happyq.journal.component.hello";
-
-// export const OFFICAL_DEMO_COMPONENTS = new Map([
-//   [COMPONENT_HELLO, HelloComponent],
-// ]);
+export const CONFIG_KEY_CHANGE_TRACKER = "happyq.journal.change-tracker.config";
 
 // /* command id */
 // // command
@@ -19,7 +12,8 @@ export const CONFIG_KEY_SERVER_DATA = "happyq.journal.config.server-data";
 // export const MENU_SINGLE_BUTTON = "happyq.journal.menu.single-button";
 
 // /* dialog id */
-// export const DIALOG_OFFICAL_DEMO = "happyq.journal.dialog.offical-demo";
+export const DIALOG_UNSAVED_CHANGE =
+  "happyq.journal.change-tracker.dialog.unsaved-change";
 
 // /* confirm id */
 // export const CONFIRM_OFFICAL_DEMO = "happyq.journal.confirm.offical-demo";

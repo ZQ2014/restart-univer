@@ -56,7 +56,7 @@ import "@univerjs/uniscript/lib/index.css";
 // import { WORKBOOK_DATA } from "./data";
 import "./style.css";
 
-const { univer, univerAPI } = createUniver({
+export const { univer, univerAPI } = createUniver({
   locale: LocaleType.ZH_CN,
   locales: {
     [LocaleType.ZH_CN]: mergeLocales(

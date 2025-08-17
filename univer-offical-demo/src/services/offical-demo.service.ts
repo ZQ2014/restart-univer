@@ -163,6 +163,32 @@ export default class OfficalDemoService
     //   sidebar?.dispose();
     // }, 3000);
 
+    //test logService error
+    try {
+      throw new Error("test logService error");
+    } catch (e) {
+      console.error(e);
+      this._logService.log(JSON.stringify(e));
+      this._logService.error(
+        "[OfficalDemoService]",
+        "test logService error",
+        // e
+        // (e as Error).message,
+        // (e as Error).name,
+        (e as Error).stack
+      );
+    }
+
+    const test = {
+      a: 1,
+      b: 2,
+      c: 3,
+    };
+
+    console.log(test);
+    this._logService.log(test);
+    this._logService.log(JSON.stringify(test));
+
     this._actionCounter++;
     return null !== sidebar;
   }

@@ -23,4 +23,5 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
 setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
 
-// import "./test-promise";
+// import "./test/test-promise.ts";
+import "./test/copy-test.ts";

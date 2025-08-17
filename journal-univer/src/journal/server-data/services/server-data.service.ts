@@ -6,6 +6,21 @@ import {
   IUniverInstanceService,
   type IWorkbookData,
 } from "@univerjs/presets";
+import type { IChangeRecord } from "../../change-tracker/services/change-tracker.service";
+
+// 一次更新操作的结果（可以包含多个修改记录）
+export interface IUpdateResult {
+  success: "success" | "failed" | "partial-success";
+  error?: string;
+  recordResults: IRecordUpdateResult[];
+}
+
+// 单一修改记录的更新结果
+export interface IRecordUpdateResult {
+  recordId: string;
+  success: boolean;
+  error?: string;
+}
 
 /**
  * 服务器数据服务
@@ -23,7 +38,7 @@ export interface IServerDataService {
    * 对于“Template”用户ID，更新基础模板的JSON文件
    * @returns 更新是否成功
    */
-  update(): Promise<IUpdateResult[]>;
+  uploadChangeRecords(records: IChangeRecord[]): Promise<IUpdateResult>;
   /**
    * 获取操作类型
    * @returns 操作类型 user | template | null
@@ -47,116 +62,134 @@ export interface IUpdateParam {
   subUnitId: string;
   columnCount: number;
 }
-export interface IUpdateResult {
-  unitId: string;
-  subUnitId: string;
-  columnCount: number;
-  sucess: boolean;
-}
+// export interface IUpdateResult {
+//   unitId: string;
+//   subUnitId: string;
+//   columnCount: number;
+//   sucess: boolean;
+// }
 
 /**
  * 获取和更新服务器数据的服务。
  */
-export abstract class ServerDataService
+export default class ServerDataService
   extends Disposable
   implements IServerDataService
 {
-  // 当前访问用户的类型
-  protected readonly _type: OperationType;
-  // 是否正在进行更新操作
-  protected _isUpdating = false;
-
-  constructor() {
-    super();
+  getInitWorkbookData(): Promise<IWorkbookData> {
+    throw new Error("Method not implemented.");
   }
-
-  constructor(
-    _config: null,
-    // 可通过this._injector.get(IUniverInstanceService)可以获取对应的服务
-    @Inject(Injector) protected readonly _injector: Injector,
-    // 注入获取当前Univer实例的服务
-    @Inject(IUniverInstanceService)
-    protected readonly univerInstanceService: IUniverInstanceService,
-    // 注入日志服务
-    @ILogService protected readonly _logService: ILogService
-  ) {
-    super();
-    this._userid = window.location.pathname;
-    this._logService.log("[ServerDataService]", "constructor", this._userid);
-    this._type = this.checkOperationType(this._userid);
-  }
-
-  /**
-   * 根据用户ID生成具体的IServerDataService实例
-   * @param userid 用户ID
-   * @returns
-   */
-  static createServerDataService(userid: string): IServerDataService {
-    if ("" === userid) {
-      return new NullServerDataService(userid);
-    } else if (ServerDataService.UPDATE_TEMPLATE_ID === userid) {
-      return new TemplateServerDataService(userid);
-    } else {
-      return new UserServerDataService(userid);
-    }
-  }
-
-  private checkOperationType(userid: string): OperationType {
-    if ("" === userid) {
-      return OperationType.null;
-    } else if (ServerDataService.UPDATE_TEMPLATE_ID === userid) {
-      return OperationType.template;
-    } else {
-      return OperationType.user;
-    }
-  }
-
-  abstract update(): Promise<IUpdateResult[]>;
-  async getInitWorkbookData(): Promise<IWorkbookData> {
-    try {
-      this._logService.log(
-        "[ServerDataService]",
-        "开始获取当前用户的初始化工作簿数据：" + this._userid
-      );
-
-      const response = await fetch(
-        ServerDataService.DATA_SERVER_URL + this._userid
-      );
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error("当前用户的初始化工作簿数据不存在");
-        }
-        throw new Error(
-          `获取当前用户的初始化工作簿数据失败: ${response.status} ${response.statusText}`
-        );
-      }
-
-      const data = await response.json();
-      const jsonData = JSON.parse(JSON.stringify(data));
-      this._logService.log(
-        "[ServerDataService]",
-        "取得当前用户的初始化工作簿数据:",
-        jsonData
-      );
-
-      return jsonData as IWorkbookData;
-    } catch (error) {
-      this._logService.error(
-        "[ServerDataService]",
-        "获取当前用户的初始化工作簿数据失败:",
-        (error as Error).message,
-        (error as Error).stack
-      );
-      return {} as IWorkbookData;
-    }
+  uploadChangeRecords(records: IChangeRecord[]): Promise<IUpdateResult> {
+    throw new Error("Method not implemented.");
   }
   getOprationType(): OperationType {
-    return this._type;
+    throw new Error("Method not implemented.");
   }
   getUserId(): string {
-    return this._userid;
+    throw new Error("Method not implemented.");
   }
 }
+// {
+//   // 当前访问用户的类型
+//   protected readonly _type: OperationType;
+//   // 是否正在进行更新操作
+//   protected _isUpdating = false;
+
+//   constructor() {
+//     super();
+//   }
+
+//   constructor(
+//     _config: null,
+//     // 可通过this._injector.get(IUniverInstanceService)可以获取对应的服务
+//     @Inject(Injector) protected readonly _injector: Injector,
+//     // 注入获取当前Univer实例的服务
+//     @Inject(IUniverInstanceService)
+//     protected readonly univerInstanceService: IUniverInstanceService,
+//     // 注入日志服务
+//     @ILogService protected readonly _logService: ILogService
+//   ) {
+//     super();
+//     this._userid = window.location.pathname;
+//     this._logService.log("[ServerDataService]", "constructor", this._userid);
+//     this._type = this.checkOperationType(this._userid);
+//   }
+
+//   /**
+//    * 根据用户ID生成具体的IServerDataService实例
+//    * @param userid 用户ID
+//    * @returns
+//    */
+//   static createServerDataService(userid: string): IServerDataService {
+//     if ("" === userid) {
+//       return new NullServerDataService(userid);
+//     } else if (ServerDataService.UPDATE_TEMPLATE_ID === userid) {
+//       return new TemplateServerDataService(userid);
+//     } else {
+//       return new UserServerDataService(userid);
+//     }
+//   }
+
+//   private checkOperationType(userid: string): OperationType {
+//     if ("" === userid) {
+//       return OperationType.null;
+//     } else if (ServerDataService.UPDATE_TEMPLATE_ID === userid) {
+//       return OperationType.template;
+//     } else {
+//       return OperationType.user;
+//     }
+//   }
+
+//   abstract uploadChangeRecords(): Promise<IUpdateResult[]>;
+//   //   let rr: IRecordUpdateResult[] = [];
+//   // return new Promise<IUpdateResult>((resolve, reject) => {
+//   //   resolve({ success: "success", recordResults: rr });
+//   // });
+//   async getInitWorkbookData(): Promise<IWorkbookData> {
+//     try {
+//       this._logService.log(
+//         "[ServerDataService]",
+//         "开始获取当前用户的初始化工作簿数据：" + this._userid
+//       );
+
+//       const response = await fetch(
+//         ServerDataService.DATA_SERVER_URL + this._userid
+//       );
+//       if (!response.ok) {
+//         if (response.status === 404) {
+//           throw new Error("当前用户的初始化工作簿数据不存在");
+//         }
+//         throw new Error(
+//           `获取当前用户的初始化工作簿数据失败: ${response.status} ${response.statusText}`
+//         );
+//       }
+
+//       const data = await response.json();
+//       const jsonData = JSON.parse(JSON.stringify(data));
+//       this._logService.log(
+//         "[ServerDataService]",
+//         "取得当前用户的初始化工作簿数据:",
+//         jsonData
+//       );
+
+//       return jsonData as IWorkbookData;
+//     } catch (error) {
+//       this._logService.error(
+//         "[ServerDataService]",
+//         "获取当前用户的初始化工作簿数据失败:",
+//         (error as Error).message,
+//         (error as Error).stack
+//       );
+//       return {} as IWorkbookData;
+//     }
+//   }
+//   getOprationType(): OperationType {
+//     return this._type;
+//   }
+//   getUserId(): string {
+//     return this._userid;
+//   }
+// }
 
 //   async update(): Promise<boolean> {
 //     if (ServerDataService.UPDATE_TEMPLATE_ID === this._userid) {

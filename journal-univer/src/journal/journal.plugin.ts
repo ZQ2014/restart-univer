@@ -5,61 +5,76 @@ import {
   Injector,
   merge,
   Plugin,
+  touchDependencies,
   UniverInstanceType,
+  type Dependency,
 } from "@univerjs/presets";
-import {
-  CONFIG_JOURNAL_UNIVER_SYMBOL,
-  DefaultJournalUniverConfig,
-  type IJournalUniverConfig,
-} from "../common/config";
-import { PLUGIN_SERVER_DATA } from "../common/const";
+import { PLUGIN_JOURNAL } from "./const";
+import { defaultServerDataConfig } from "./server-data/common/config";
+import { CONFIG_KEY_SERVER_DATA } from "./server-data/common/const";
+import { defaultChangeTrackerConfig } from "./change-tracker/common/config";
+import { CONFIG_KEY_CHANGE_TRACKER } from "./change-tracker/common/const";
+import UIUtils from "./utils/ui-utils";
+import { JournalLogUtils } from "./utils/log-utils";
 
 /**
- * 与服务端数据交互的插件
+ * SZXW“一本账”插件
  */
-export default class ServerDataPlugin extends Plugin {
+export default class JournalPlugin extends Plugin {
   static override type = UniverInstanceType.UNIVER_SHEET;
-  static override pluginName = PLUGIN_SERVER_DATA;
+  static override pluginName = PLUGIN_JOURNAL;
 
   constructor(
     // 插件配置
-    _config: Partial<IJournalUniverConfig> = DefaultJournalUniverConfig,
+    _config: null,
     // 可通过this._injector.get(IUniverInstanceService)可以获取对应的服务
     @Inject(Injector) readonly _injector: Injector,
-    // 注入配置服务（可选）
+    // 注入配置服务
     @Inject(IConfigService) private readonly _configService: IConfigService,
     // 注入日志服务
     @Inject(ILogService) private readonly _logService: ILogService
   ) {
-    _logService.log("[ServerDataPlugin]", "constructor");
-
+    _logService.log("[JournalPlugin]", "constructor");
     super();
+
     // 加载配置
-    const { ...rest } = merge({}, DefaultJournalUniverConfig, _config);
-    this._configService.setConfig(CONFIG_JOURNAL_UNIVER_SYMBOL, rest);
+    const { ...serverDataConfig } = merge({}, defaultServerDataConfig, _config);
+    this._configService.setConfig(CONFIG_KEY_SERVER_DATA, serverDataConfig);
+
+    const { ...changeTrackerConfig } = merge(
+      {},
+      defaultChangeTrackerConfig,
+      _config
+    );
+    this._configService.setConfig(
+      CONFIG_KEY_CHANGE_TRACKER,
+      changeTrackerConfig
+    );
   }
 
   override onStarting(): void {
-    this._logService.log("[ServerDataPlugin]", "onStarting");
+    this._logService.log("[JournalPlugin]", "onStarting");
 
-    // 在onStarting注册插件的依赖模块，需要注意先后顺序
-    // ([[SimpleDemoService], [SimpleDemoController]] as Dependency[]).forEach(
-    //   (d) => this._injector.add(d)
-    // );
+    //TODO  在onStarting注册插件的依赖模块，需要注意先后顺序
+    ([[JournalLogUtils], [UIUtils]] as Dependency[]).forEach((d) =>
+      this._injector.add(d)
+    );
 
-    // @todo 保证模块已经注册，官方源码分别在不同的生命周期函数中touch，原因待考证
-    // touchDependencies(this._injector, [[SimpleController], [SimpleService]]);
+    // 模拟首次调用以触发依赖系统调用构造函数
+    //TODO 官方源码分别在不同的生命周期函数中touch，原因待考证
+    touchDependencies(this._injector, [[JournalLogUtils]]);
   }
 
   override onReady(): void {
-    this._logService.log("[ServerDataPlugin]", "onReady");
+    this._logService.log("[JournalPlugin]", "onReady");
   }
 
   override onRendered(): void {
-    this._logService.log("[ServerDataPlugin]", "onRendered");
+    this._logService.log("[JournalPlugin]", "onRendered");
+    touchDependencies(this._injector, [[UIUtils]]);
   }
 
   override onSteady(): void {
-    this._logService.log("[ServerDataPlugin]", "onSteady");
+    this._logService.log("[JournalPlugin]", "onSteady");
   }
 }

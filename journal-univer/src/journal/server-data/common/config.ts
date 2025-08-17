@@ -1,15 +1,15 @@
-import { CONFIG_JOURNAL_UNIVER } from "./const";
+import { CONFIG_KEY_SERVER_DATA } from "./const";
 
-export const CONFIG_JOURNAL_UNIVER_SYMBOL = Symbol(CONFIG_JOURNAL_UNIVER);
+export const configSymbolServerData = Symbol(CONFIG_KEY_SERVER_DATA);
 
-export interface IJournalUniverConfig {
+export interface IServerDataConfig {
   // 数据服务器的URL
   DATA_SERVER_URL: string;
   // 更新模板的userid
   UPDATE_TEMPLATE_URL: string;
 }
 
-export const DefaultJournalUniverConfig: IJournalUniverConfig = {
+export const defaultServerDataConfig: IServerDataConfig = {
   DATA_SERVER_URL: "/api/happyq/data",
   UPDATE_TEMPLATE_URL: "Template",
 };
