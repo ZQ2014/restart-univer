@@ -13,7 +13,7 @@
     "vite": "^7.1.0"
   },
   "dependencies": {
-    "@univerjs/preset-sheets-core": "^0.10.3",
-    "@univerjs/presets": "^0.10.3"
+    "@univerjs/preset-sheets-core": "^0.10.4",
+    "@univerjs/presets": "^0.10.4"
   }
 }

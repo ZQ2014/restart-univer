@@ -24,3 +24,29 @@ const { univer, univerAPI } = createUniver({
 });
 
 univerAPI.createWorkbook({});
+
+// const workbook = this._univerInstanceService.getUnit<Workbook>(workbookId);
+// // getCurrentUnitOfType<Workbook>( UniverInstanceType.UNIVER_SHEET );
+// const worksheet = workbook?.getSheetBySheetId(worksheetId);
+// const range = worksheet?.getRange(row, col);
+// if (!workbook || !worksheet || !range) {
+//   this._logService.error(
+//     "[ChangeTrackerService]",
+//     "_updateCellStyle",
+//     "workbook or worksheet or range is null",
+//     workbookId,
+//     workbook,
+//     worksheetId,
+//     worksheet,
+//     range
+//   );
+//   return;
+// }
+
+// const fWorkbook = univerAPI.getActiveWorkbook();
+// const fWorksheet = fWorkbook?.getActiveSheet();
+// const fRange = fWorksheet?.getRange(row, col);
+
+// const fWorkbook = univerAPI.getWorkbook(workbookId);
+// const fWorksheet = fWorkbook?.getSheetBySheetId(worksheetId);
+// const fRange = fWorksheet?.getRange(row, col);
