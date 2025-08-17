@@ -23,28 +23,4 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
 setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
 
-//test Promise async await
-async function sleep(ms: number) {
-  return new Promise<boolean>((resolve, reject) => {
-    console.log("before setTimeout");
-    setTimeout(() => {
-      console.log("in setTimeout");
-      resolve(true);
-    }, ms);
-    reject("error");
-    console.log("after setTimeout");
-  });
-}
-
-async function test() {
-  console.log("start");
-  const rr = sleep(5000);
-  console.log("no await:" + rr);
-  rr.then((rrr) => {
-    console.log("then:" + rrr);
-  });
-  const r = await sleep(5000);
-  console.log("end:" + r);
-}
-
-test();
+// import "./test-promise";
