@@ -55,7 +55,7 @@ export class OfficalDemoController extends Disposable {
     // 注入菜单管理器
     @Inject(IMenuManagerService)
     private readonly _menuManagerService: IMenuManagerService,
-    // todo
+    //TODO
     // 注入快捷键服务
     @Inject(IShortcutService)
     private readonly _shortcutService: IShortcutService

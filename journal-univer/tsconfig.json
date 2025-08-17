@@ -21,6 +21,7 @@
     "noFallthroughCasesInSwitch": true, // 不允许 switch 语句中的贯穿情况
     "noUncheckedSideEffectImports": true, // 不允许未检查的副作用导入
 
+    "jsx": "react-jsx", // 允许在tsx中使用jsx语法
     "experimentalDecorators": true // 允许使用装饰器
   },
 

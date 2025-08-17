@@ -1,4 +1,13 @@
 import { Loading, SaveSingle } from "@univerjs/icons";
+
+import {
+  ErrorIcon,
+  InfoIcon,
+  LoadingMultiIcon,
+  SuccessIcon,
+  WarningIcon,
+} from "@univerjs/icons";
+
 import React from "react";
 
 // export function HelloComponent() {

@@ -60,6 +60,54 @@ export default class OfficalDemoService
   // 用于切换按键的不同响应
   private _actionCounter: number = 0;
 
+  constructor(
+    _config: null,
+    // 可通过this._injector.get(IUniverInstanceService)可以获取对应的模块
+    @Inject(Injector) readonly _injector: Injector,
+    // 注入日志服务
+    @ILogService private readonly _logService: ILogService,
+
+    // 注入获取当前Univer实例的服务，用于管理工作簿并与之交互
+    @Inject(IUniverInstanceService)
+    private readonly _univerInstanceService: IUniverInstanceService,
+    // 注入对话框服务
+    @Inject(IDialogService)
+    private readonly _dialogService: IDialogService,
+    // 注入确认框服务
+    @Inject(IConfirmService)
+    private readonly _confirmService: IConfirmService,
+    // 注入侧边栏服务
+    @Inject(ISidebarService)
+    private readonly _sidebarService: ISidebarService,
+    // 注入通知服务
+    @Inject(INotificationService)
+    private readonly _notificationService: INotificationService,
+    // 注入消息服务
+    @Inject(IMessageService)
+    private readonly _messageService: IMessageService,
+    //TODO
+    // 注入控制右键菜单的服务
+    @Inject(IContextMenuService)
+    private readonly _contextMenuService: IContextMenuService,
+    // 注入快捷面板服务
+    @Inject(ShortcutPanelService)
+    private readonly _shortcutPanelService: ShortcutPanelService,
+    // 注入画布弹出窗口服务
+    @Inject(ICanvasPopupService)
+    private readonly _ICanvasPopupService: ICanvasPopupService,
+    // 注入画布浮动域服务
+    @Inject(CanvasFloatDomService)
+    private readonly _CanvasFloatDomService: CanvasFloatDomService
+  ) {
+    _logService.log("[OfficalDemoService]", "constructor");
+    super();
+
+    // 必要的清理工作
+    // this.disposeWithMe(() => {
+    //   this._changeRecords.length = 0;
+    // });
+  }
+
   /**
    * 侧边栏配置示例
    */
@@ -82,6 +130,42 @@ export default class OfficalDemoService
       this._logService.log("[OfficalDemoService]", "Sidebar", "onClose");
     },
   };
+
+  openSidebar(params: any): boolean {
+    this._logService.log(
+      "[OfficalDemoService]",
+      "openSidebar",
+      params,
+      this._actionCounter
+    );
+
+    let sidebar = null;
+
+    switch (this._actionCounter % 2) {
+      case 0:
+        sidebar = this._sidebarService.open(this._sidebarOptions);
+        break;
+      case 1:
+        sidebar = univerAPI.openSidebar(this._sidebarOptions);
+        break;
+      default:
+        this._logService.warn(
+          "[OfficalDemoService]",
+          "未定义的活动类型：",
+          this._actionCounter % 2
+        );
+        break;
+    }
+
+    // // 3秒后关闭
+    // setTimeout(() => {
+    //   this._logService.log("[OfficalDemoService]", "关闭Sidebar", sidebar);
+    //   sidebar?.dispose();
+    // }, 3000);
+
+    this._actionCounter++;
+    return null !== sidebar;
+  }
 
   /**
    * 对话框配置示例
@@ -140,158 +224,6 @@ export default class OfficalDemoService
       this._dialogService.close(DIALOG_OFFICAL_DEMO);
     },
   };
-
-  /**
-   * 确认框配置示例
-   */
-  private readonly _confirmOpations: IConfirmPartMethodOptions = {
-    // The unique identifier for the confirm
-    id: CONFIRM_OFFICAL_DEMO,
-
-    title: { title: "header.title", label: COMPONENT_HELLO },
-    children: { title: "children.title", label: COMPONENT_LOADING },
-
-    width: 300,
-
-    cancelText: "取消",
-    confirmText: "确定",
-
-    onConfirm: (result?: Record<string, any>) => {
-      // @todo 不知道如何传参
-      this._logService.log(
-        "[OfficalDemoService]",
-        "confirm",
-        "onConfirm",
-        result
-      );
-      // 必须添加此句，否则无法关闭
-      this._confirmService.close(CONFIRM_OFFICAL_DEMO);
-    },
-    onClose: (result?: Record<string, any>) => {
-      // @todo 不知道如何传参
-      this._logService.log(
-        "[OfficalDemoService]",
-        "confirm",
-        "onClose",
-        result
-      );
-      // 必须添加此句，否则无法关闭
-      this._confirmService.close(CONFIRM_OFFICAL_DEMO);
-    },
-  };
-
-  /**
-   * 通知配置示例
-   */
-  private readonly _notificationOpations: INotificationOptions = {
-    title: "notification.title",
-    content: "notification.content",
-    /** 'success' | 'info' | 'warning' | 'error' | 'message' | 'loading' */
-    type: "success",
-    /** 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center' */
-    position: "top-right",
-    /** 持续时间 */
-    duration: 2000, // 毫秒
-    // expand: true, // 无效
-    // icon?: React.ReactNode;
-    closable: false, // 默认true
-  };
-
-  /**
-   * 消息配置示例
-   */
-  private readonly _messageProps: IMessageProps = {
-    id: MESSAGE_OFFICAL_DEMO,
-    content: "message.content",
-    /** 'success' | 'info' | 'warning' | 'error' | 'loading' */
-    type: MessageType.Success,
-    /** 持续时间 */
-    duration: 5000, // 毫秒
-    onClose: () => {
-      // 没被调用
-      this._logService.log("[OfficalDemoService]", "message", "onClose");
-    },
-  };
-
-  constructor(
-    _config: null,
-    // 可通过this._injector.get(IUniverInstanceService)可以获取对应的模块
-    @Inject(Injector) readonly _injector: Injector,
-    // 注入日志服务
-    @ILogService private readonly _logService: ILogService,
-
-    // 注入获取当前Univer实例的服务，用于管理工作簿并与之交互
-    @Inject(IUniverInstanceService)
-    private readonly _univerInstanceService: IUniverInstanceService,
-    // 注入对话框服务
-    @Inject(IDialogService)
-    private readonly _dialogService: IDialogService,
-    // 注入确认框服务
-    @Inject(IConfirmService)
-    private readonly _confirmService: IConfirmService,
-    // 注入侧边栏服务
-    @Inject(ISidebarService)
-    private readonly _sidebarService: ISidebarService,
-    // 注入通知服务
-    @Inject(INotificationService)
-    private readonly _notificationService: INotificationService,
-    // 注入消息服务
-    @Inject(IMessageService)
-    private readonly _messageService: IMessageService,
-    // @todo
-    // 注入控制右键菜单的服务
-    @Inject(IContextMenuService)
-    private readonly _contextMenuService: IContextMenuService,
-    // 注入快捷面板服务
-    @Inject(ShortcutPanelService)
-    private readonly _shortcutPanelService: ShortcutPanelService,
-    // 注入画布弹出窗口服务
-    @Inject(ICanvasPopupService)
-    private readonly _ICanvasPopupService: ICanvasPopupService,
-    // 注入画布浮动域服务
-    @Inject(CanvasFloatDomService)
-    private readonly _CanvasFloatDomService: CanvasFloatDomService
-  ) {
-    super();
-    this._logService.log("[OfficalDemoService]", "constructor");
-  }
-
-  openSidebar(params: any): boolean {
-    this._logService.log(
-      "[OfficalDemoService]",
-      "openSidebar",
-      params,
-      this._actionCounter
-    );
-
-    let sidebar = null;
-
-    switch (this._actionCounter % 2) {
-      case 0:
-        sidebar = this._sidebarService.open(this._sidebarOptions);
-        break;
-      case 1:
-        sidebar = univerAPI.openSidebar(this._sidebarOptions);
-        break;
-      default:
-        this._logService.warn(
-          "[OfficalDemoService]",
-          "未定义的活动类型：",
-          this._actionCounter % 2
-        );
-        break;
-    }
-
-    // // 3秒后关闭
-    // setTimeout(() => {
-    //   this._logService.log("[OfficalDemoService]", "关闭Sidebar", sidebar);
-    //   sidebar?.dispose();
-    // }, 3000);
-
-    this._actionCounter++;
-    return null !== sidebar;
-  }
-
   openDialog(params: any): boolean {
     this._logService.log(
       "[OfficalDemoService]",
@@ -330,6 +262,45 @@ export default class OfficalDemoService
     return null !== dialog;
   }
 
+  /**
+   * 确认框配置示例
+   */
+  private readonly _confirmOpations: IConfirmPartMethodOptions = {
+    // The unique identifier for the confirm
+    id: CONFIRM_OFFICAL_DEMO,
+
+    title: { title: "header.title", label: COMPONENT_HELLO },
+    children: { title: "children.title", label: COMPONENT_LOADING },
+
+    width: 300,
+
+    cancelText: "取消",
+    confirmText: "确定",
+
+    onConfirm: (result?: Record<string, any>) => {
+      //TODO 不知道如何传参
+      this._logService.log(
+        "[OfficalDemoService]",
+        "confirm",
+        "onConfirm",
+        result
+      );
+      // 必须添加此句，否则无法关闭
+      this._confirmService.close(CONFIRM_OFFICAL_DEMO);
+    },
+    onClose: (result?: Record<string, any>) => {
+      // @todo 不知道如何传参
+      this._logService.log(
+        "[OfficalDemoService]",
+        "confirm",
+        "onClose",
+        result
+      );
+      // 必须添加此句，否则无法关闭
+      this._confirmService.close(CONFIRM_OFFICAL_DEMO);
+    },
+  };
+
   openConfirm(params: any): boolean {
     this._logService.log(
       "[OfficalDemoService]",
@@ -356,6 +327,23 @@ export default class OfficalDemoService
     this._actionCounter++;
     return null !== confirm;
   }
+
+  /**
+   * 通知配置示例
+   */
+  private readonly _notificationOpations: INotificationOptions = {
+    title: "notification.title",
+    content: "notification.content",
+    /** 'success' | 'info' | 'warning' | 'error' | 'message' | 'loading' */
+    type: "success",
+    /** 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center' */
+    position: "top-right",
+    /** 持续时间 */
+    duration: 2000, // 毫秒
+    // expand: true, // 无效
+    // icon?: React.ReactNode;
+    closable: false, // 默认true
+  };
 
   showNotification(params: any): boolean {
     this._logService.log(
@@ -397,6 +385,21 @@ export default class OfficalDemoService
     return null !== notification;
   }
 
+  /**
+   * 消息配置示例
+   */
+  private readonly _messageProps: IMessageProps = {
+    id: MESSAGE_OFFICAL_DEMO,
+    content: "message.content",
+    /** 'success' | 'info' | 'warning' | 'error' | 'loading' */
+    type: MessageType.Success,
+    /** 持续时间 */
+    duration: 5000, // 毫秒
+    onClose: () => {
+      // 没被调用
+      this._logService.log("[OfficalDemoService]", "message", "onClose");
+    },
+  };
   showMessage(params: any): boolean {
     this._logService.log(
       "[OfficalDemoService]",
@@ -537,6 +540,7 @@ export default class OfficalDemoService
     return null == disposable;
 
     // const workbook = this._univerInstanceService.getCurrentUnitOfType<Workbook>(
+    // const workbook = this._univerInstanceService.getUnit<Workbook>(workbookId);
     //   UniverInstanceType.UNIVER_SHEET
     // );
     // if (!workbook) {

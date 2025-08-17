@@ -26,6 +26,11 @@ export class SimpleDemoService
   ) {
     super();
     this._logService.log("[SimpleDemoService]", "constructor");
+
+    // 必要的清理工作
+    // this.disposeWithMe(() => {
+    //   this._changeRecords.length = 0;
+    // });
   }
 
   doSomthing(): void {
