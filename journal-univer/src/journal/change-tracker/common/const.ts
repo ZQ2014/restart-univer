@@ -1,15 +1,16 @@
 /* config key */
 export const CONFIG_KEY_CHANGE_TRACKER = "happyq.journal.change-tracker.config";
 
-// /* command id */
-// // command
-// // operation
-// export const OPERATION_SINGLE_BUTTON_ONCLICKED =
-//   "happyq.journal.operation.single-button.on-clicked";
-// // mutation
+/* command id */
+// command
+export const COMMAND_UPLOAD_CHANGE_RECORDS =
+  "happyq.journal.command.uploda-change-records";
+// operation
+// mutation
 
 // /* menu id */
-// export const MENU_SINGLE_BUTTON = "happyq.journal.menu.single-button";
+export const MENU_BUTTON_UPLOAD_CHANGE_RECORDS =
+  "happyq.journal.menu.button.uploda-change-records";
 
 // /* dialog id */
 export const DIALOG_UNSAVED_CHANGE =
@@ -23,3 +24,17 @@ export const DIALOG_UNSAVED_CHANGE =
 
 // /* message id */
 // export const MESSAGE_OFFICAL_DEMO = "happyq.journal.message.offical-demo";
+
+/* components name */
+export const COMPONENT_ERROR_ICON =
+  "happyq.journal.change-tracker.component.error-icon";
+export const COMPONENT_EXPORT_ICON =
+  "happyq.journal.change-tracker.component.export-icon";
+export const COMPONENT_INFO_ICON =
+  "happyq.journal.change-tracker.component.info-icon";
+export const COMPONENT_LOADING_MULTI_ICON =
+  "happyq.journal.change-tracker.component.loading-multi-icon";
+export const COMPONENT_SUCESS_ICON =
+  "happyq.journal.change-tracker.component.sucess-icon";
+export const COMPONENT_WARNING_ICON =
+  "happyq.journal.change-tracker.component.warning-icon";

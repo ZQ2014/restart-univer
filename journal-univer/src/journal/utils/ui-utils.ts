@@ -339,7 +339,7 @@ export default class UIUtils extends Disposable {
    * 显示通知消息
    * @param title 通知标题
    * @param content 通知内容
-   * @param type 通知类型，默认为'info'，可选值为'success' | 'info' | 'warning' | 'error' | 'message' | 'loading'
+   * @param type 通知类型，默认为'info'，可选值为'success' | 'info' （重要！）| 'warning' （警告！）| 'error' （异常！）| 'message' （提示：）| 'loading'
    * @param position 通知显示位置，默认为'bottom-right'，可选值为'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center'
    * @param duration 通知持续时间(毫秒)，默认为3000毫秒
    * @param closable 是否显示关闭按键（“x”），默认为true
