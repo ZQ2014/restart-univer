@@ -20,6 +20,7 @@ import {
   DIALOG_UNSAVED_CHANGE,
 } from "../common/const";
 import { COMPONENT_WARNING_ICON } from "../components/components";
+import ServerDataService from "../../server-data/services/server-data.service";
 
 // 修改记录
 export interface IChangeRecord {
@@ -47,20 +48,9 @@ export class ChangeTrackerService extends Disposable {
     _config: null,
     // 可通过this._injector.get(IUniverInstanceService)可以获取对应的模块
     @Inject(Injector) readonly _injector: Injector,
-    // 注入配置服务
-    @Inject(IConfigService) private readonly _configService: IConfigService,
-    // 注入配置服务
-    @Inject(IServerDataService)
-    private readonly _serverDataService: IServerDataService,
-    // 注入通知用户交互工具包（对话框、通知、消息等）
-    @Inject(UIUtils)
-    private readonly _UIUtils: UIUtils,
-    // // 注入获取当前Univer实例的服务，用于管理工作簿并与之交互
-    // @Inject(IUniverInstanceService)
-    // private readonly _univerInstanceService: IUniverInstanceService,
-    // // 注入命令服务，用于注册命令，以通知Univer执行特定操作的事件并实现与之对应得执行代码
-    // @Inject(ICommandService) private readonly _commandService: ICommandService,
-    // 注入自定义日志服务
+    // 注入服务器数据交互服务
+    @Inject(ServerDataService)
+    private readonly _serverDataService: ServerDataService,
     @Inject(JournalLogUtils) private readonly _logService: JournalLogUtils
   ) {
     super();

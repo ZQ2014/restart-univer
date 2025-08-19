@@ -32,6 +32,7 @@ import { CHANGE_TRACKER_COMMANDS } from "../commands/commands/change-tracker.com
 import { UploadChangeRecordsButtonFactory } from "./change-tracker.menu";
 import { univerAPI } from "../../../main-univer";
 import { ChangeTrackerService } from "../services/change-tracker.service";
+import ServerDataService from "../../server-data/services/server-data.service";
 
 export type UnsavedChangeDialogResult =
   | "save&switch"
@@ -58,7 +59,7 @@ export class ChangeTrackerController extends Disposable {
     // 注入通知用户交互工具包（对话框、通知、消息等）
     @Inject(UIUtils)
     private readonly _UIUtils: UIUtils,
-    // 注入通知用户交互工具包（对话框、通知、消息等）
+    // 注入变更跟踪服务
     @Inject(ChangeTrackerService)
     private readonly _changeTrackerService: ChangeTrackerService,
     // 注入自定义日志服务
@@ -197,45 +198,50 @@ export class ChangeTrackerController extends Disposable {
         const dialogResult = await this._showUnsavedChangeDialog();
         switch (dialogResult) {
           case "save&switch":
-            // try {
-            //   //HACK
-            //   this._debug("_showUnsavedChangeDialog", "onOk");
-            //   // 保存并切换：
-            //   // 暂时不关闭对话框以保持遮罩层禁止用户操作
-            //   //TODO 为避免窗口重叠，需注意上传数据时使用通知，不使用对话框
-            //   // 上传修改记录
-            //   const updateResult = await this.uploadChangeRecords();
-            //   // 关闭对话框
-            //   if (!updateResult || updateResult.success !== "success") {
-            //     //TODO 观察是否通知会重叠
-            //     this._UIUtils.showNotification(
-            //       "错误：",
-            //       "保存失败，取消切换，请重试或联系管理员。",
-            //       "error"
-            //     );
-            //     this._UIUtils.closeDialog(DIALOG_UNSAVED_CHANGE);
-            //     resolve(false);
-            //   } else {
-            //     this._UIUtils.showNotification("", "保存成功，即将切换……");
-            //     this._UIUtils.closeDialog(DIALOG_UNSAVED_CHANGE);
-            //     resolve(true);
-            //   }
-            // } catch (error) {
-            //   this._error("_showUnsavedChangeDialog", "onOk异常", error);
-            //   this._UIUtils.showNotification(
-            //     "错误：",
-            //     "保存失败，取消切换，请重试或联系管理员。",
-            //     "error"
-            //   );
-            //   this._UIUtils.closeDialog(DIALOG_UNSAVED_CHANGE);
-            //   resolve(false);
-            // }
+            try {
+              //HACK
+              this._debug("_handleWorkbookOrWorksheetChange", "ave&switch");
+              // 保存并切换：
+              //TODO 为避免窗口重叠，需注意上传数据时使用通知，不使用对话框
+              // 上传修改记录
+              const updateResult =
+                await this._serverDataService.uploadChangeRecords();
+              // 关闭对话框
+              if (!updateResult || updateResult.success !== "success") {
+                //TODO 观察是否通知会重叠
+                this._UIUtils.showNotification(
+                  "错误：",
+                  "保存失败，取消切换，请重试或联系管理员。",
+                  "error"
+                );
+                this._UIUtils.closeDialog(DIALOG_UNSAVED_CHANGE);
+                resolve(false);
+              } else {
+                this._UIUtils.showNotification("", "保存成功，即将切换……");
+                this._UIUtils.closeDialog(DIALOG_UNSAVED_CHANGE);
+                resolve(true);
+              }
+            } catch (error) {
+              this._error("_showUnsavedChangeDialog", "onOk异常", error);
+              this._UIUtils.showNotification(
+                "错误：",
+                "保存失败，取消切换，请重试或联系管理员。",
+                "error"
+              );
+              this._UIUtils.closeDialog(DIALOG_UNSAVED_CHANGE);
+              resolve(false);
+            }
             return true;
           case "no-save&switch":
+            this._debug("_handleWorkbookOrWorksheetChange", "no-save&switch");
             // 不保存并切换：清除待更新记录并返回true
             this._changeTrackerService.clearAllRecords();
             return true;
           case "no-save&no-switch":
+            this._debug(
+              "_handleWorkbookOrWorksheetChange",
+              "no-save&no-switch"
+            );
             return false;
         }
       } catch (error) {

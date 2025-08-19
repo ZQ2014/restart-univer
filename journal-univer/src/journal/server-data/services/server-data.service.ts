@@ -8,11 +8,13 @@ import {
 } from "@univerjs/presets";
 import type { IChangeRecord } from "../../change-tracker/services/change-tracker.service";
 
-// 一次更新操作的结果（可以包含多个修改记录）
-export interface IUpdateResult {
-  success: "success" | "failed" | "partial-success";
-  error?: string;
-  recordResults: IRecordUpdateResult[];
+export type OperationType = "user" | "template" | "null";
+
+/**FIXME 待完善*/
+export interface IUpdateParam {
+  userId: string;
+  subUnitId: string;
+  changeRecords: IChangeRecord[];
 }
 
 // 单一修改记录的更新结果
@@ -22,60 +24,17 @@ export interface IRecordUpdateResult {
   error?: string;
 }
 
-/**
- * 服务器数据服务
- * 根据不同的用户，执行不同的数据操作
- */
-export interface IServerDataService {
-  /**
-   * 获取当前用户的初始化工作簿数据
-   * @returns JSON格式数据，发生异常则返回{}
-   */
-  getInitWorkbookData(): Promise<IWorkbookData>;
-  /**
-   * 更新操作，作为“更新”按钮的回调函数
-   * 对于普通用户ID，根据用户修改历史更新数据库数据
-   * 对于“Template”用户ID，更新基础模板的JSON文件
-   * @returns 更新是否成功
-   */
-  uploadChangeRecords(records: IChangeRecord[]): Promise<IUpdateResult>;
-  /**
-   * 获取操作类型
-   * @returns 操作类型 user | template | null
-   */
-  getOprationType(): OperationType;
-  /**
-   * 获取用户ID
-   * @returns 用户ID
-   */
-  getUserId(): string;
+// 一次更新操作的结果（可以包含多个修改记录）
+export interface IUpdateResult {
+  success: "success" | "failed" | "partial-success";
+  error?: string;
+  recordResults: IRecordUpdateResult[];
 }
-
-export enum OperationType {
-  user,
-  template,
-  null,
-}
-/** @todo 待完善*/
-export interface IUpdateParam {
-  unitId: string;
-  subUnitId: string;
-  columnCount: number;
-}
-// export interface IUpdateResult {
-//   unitId: string;
-//   subUnitId: string;
-//   columnCount: number;
-//   sucess: boolean;
-// }
 
 /**
  * 获取和更新服务器数据的服务。
  */
-export default class ServerDataService
-  extends Disposable
-  implements IServerDataService
-{
+export default class ServerDataService extends Disposable {
   getInitWorkbookData(): Promise<IWorkbookData> {
     throw new Error("Method not implemented.");
   }

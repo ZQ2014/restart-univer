@@ -7,22 +7,6 @@ import {
   type IWorkbookData,
 } from "@univerjs/presets";
 
-export enum OperationType {
-  user,
-  template,
-  null,
-}
-/** @todo 待完善*/
-export interface IUpdateParam {
-  unitId: string;
-  subUnitId: string;
-  columnCount: number;
-}
-export interface IUpdateResult {
-  sucess: boolean;
-  param: IUpdateParam;
-}
-
 /**
  * 服务器数据服务
  */
