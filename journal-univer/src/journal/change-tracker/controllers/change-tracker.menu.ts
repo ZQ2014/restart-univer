@@ -6,14 +6,14 @@ import {
   COMPONENT_EXPORT_ICON,
   MENU_BUTTON_UPLOAD_CHANGE_RECORDS,
 } from "../common/const";
-import { UploadChangeRecordsCommand } from "../commands/commands/change-tracker.command";
+import { UploadChangeRecordsButtonOperation } from "../commands/commands/change-tracker.command";
 
 export function UploadChangeRecordsButtonFactory(): IMenuButtonItem<string> {
   return {
     // 菜单项的ID。通常它应该与它将调用的命令的ID相同。
     id: MENU_BUTTON_UPLOAD_CHANGE_RECORDS,
     //如果两个菜单重复使用相同的命令（例如复制和粘贴命令），它们应该具有相同的命令id和不同的id。
-    commandId: UploadChangeRecordsCommand.id,
+    commandId: UploadChangeRecordsButtonOperation.id,
     // 菜单项的类型，在本例中，它是一个按钮
     type: MenuItemType.BUTTON,
     // 按钮的图标，需要提前在 ComponentManager 中注册

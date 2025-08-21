@@ -6,7 +6,11 @@ export const CONFIG_KEY_CHANGE_TRACKER = "happyq.journal.change-tracker.config";
 export const COMMAND_UPLOAD_CHANGE_RECORDS =
   "happyq.journal.command.uploda-change-records";
 // operation
+export const OPERATION_UPLOAD_CHANGE_RECORDS_BUTTON =
+  "happyq.journal.operation.button.uploda-change-records";
 // mutation
+export const MUTATION_CHANGE_CELL_STYLE_BY_CHANGE_RECORD =
+  "happyq.journal.mutation.change-cell-style-by-change-record";
 
 // /* menu id */
 export const MENU_BUTTON_UPLOAD_CHANGE_RECORDS =

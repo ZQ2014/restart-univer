@@ -124,4 +124,11 @@ export const { univer, univerAPI } = createUniver({
   ],
 });
 
-univerAPI.createWorkbook({});
+const fWorkbookEmpty = univerAPI.createWorkbook({});
+
+//请求用户初始化数据WORKBOOK_DATA
+// const fWorkbookUserData = univerAPI.createWorkbook(WORKBOOK_DATA});
+// const univerInstanceService = univer
+//   .__getInjector()
+//   .get(IUniverInstanceService);
+// univerInstanceService.disposeUnit(fWorkbookEmpty.getId());
