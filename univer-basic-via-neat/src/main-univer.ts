@@ -32,6 +32,7 @@ import { UniverUniscriptPlugin } from "@univerjs/uniscript";
 import UniscriptZhCN from "@univerjs/uniscript/locale/zh-CN";
 import {
   createUniver,
+  IUniverInstanceService,
   LocaleType,
   LogLevel,
   mergeLocales,
@@ -122,3 +123,16 @@ const { univer, univerAPI } = createUniver({
 });
 
 univerAPI.createWorkbook(WORKBOOK_DATA);
+
+// const fWorkbook1 = univerAPI.createWorkbook({ id: "Sheet1", name: "Sheet1" });
+// const fWorkbook2 = univerAPI.createWorkbook(WORKBOOK_DATA, {
+//   makeCurrent: false,
+// });
+
+// const injector = univer.__getInjector();
+// const univerInstanceService = injector.get(IUniverInstanceService);
+
+// setTimeout(() => {
+//   univerInstanceService.focusUnit(fWorkbook2.getId());
+//   univerInstanceService.disposeUnit(fWorkbook1.getId());
+// }, 5000);
