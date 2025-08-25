@@ -15,6 +15,13 @@ import React from "react";
 // }
 export function HelloComponent(props?: Record<string, any>) {
   return <div>Hello {props?.name || "Univer"}!</div>;
+  // 测试换行
+  // return (
+  //   <div>
+  //     <p>这是第一行。</p>
+  //     <p>这是第二行。</p>
+  //   </div>
+  // );
 }
 
 export function SaveSingleComponent() {
@@ -91,3 +98,12 @@ export const RangePopupComponent = () =>
     },
     "Custom Popup"
   );
+
+// export function FloatingDOMComponent({ data }) {
+//   return (
+//     <div>
+//       Hello
+//       {data?.label}!
+//     </div>
+//   );
+// }

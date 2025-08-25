@@ -131,6 +131,7 @@ export function DropdownListSecondItemFactory(): IMenuButtonItem<string> {
 export function DropdownListThirdItemFactory(): IMenuButtonItem<string> {
   return {
     id: DropdownListThirdItemOperation.id,
+    commandId: DropdownListThirdItemOperation.id,
     type: MenuItemType.BUTTON,
     icon: COMPONENT_BUTTON_ICON,
     label: COMPONENT_HELLO,
@@ -141,6 +142,7 @@ export function DropdownListThirdItemFactory(): IMenuButtonItem<string> {
 export function DropdownListFourthItemFactory(): IMenuButtonItem<string> {
   return {
     id: DropdownListFourthItemOperation.id,
+    commandId: DropdownListFourthItemOperation.id,
     type: MenuItemType.BUTTON,
     icon: COMPONENT_BUTTON_ICON,
     label: COMPONENT_HELLO,
@@ -151,6 +153,7 @@ export function DropdownListFourthItemFactory(): IMenuButtonItem<string> {
 export function DropdownListFifthItemFactory(): IMenuButtonItem<string> {
   return {
     id: DropdownListFifthItemOperation.id,
+    commandId: DropdownListFifthItemOperation.id,
     type: MenuItemType.BUTTON,
     icon: COMPONENT_BUTTON_ICON,
     label: COMPONENT_HELLO,
@@ -161,6 +164,7 @@ export function DropdownListFifthItemFactory(): IMenuButtonItem<string> {
 export function DropdownListSixthItemFactory(): IMenuButtonItem<string> {
   return {
     id: DropdownListSixthItemOperation.id,
+    commandId: DropdownListSixthItemOperation.id,
     type: MenuItemType.BUTTON,
     icon: COMPONENT_BUTTON_ICON,
     label: COMPONENT_HELLO,

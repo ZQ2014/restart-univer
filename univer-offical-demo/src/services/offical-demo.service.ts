@@ -201,7 +201,7 @@ export default class OfficalDemoService
     id: DIALOG_OFFICAL_DEMO,
 
     title: { title: "header.title", label: COMPONENT_HELLO },
-    children: { title: "children.title", label: COMPONENT_LOADING },
+    children: { title: "children.ti\ntle", label: COMPONENT_LOADING }, // 无法换行
     // footer与默认的确认/取消按键冲突，优先级更高
     // footer: {
     //   title: "footer.title",
@@ -359,7 +359,8 @@ export default class OfficalDemoService
    */
   private readonly _notificationOpations: INotificationOptions = {
     title: "notification.title",
-    content: "notification.content",
+    content:
+      "我可以换行吗？我可以换行吗？我可以换行吗？我可以换行吗？\n可以\n不可以",
     /** 'success' | 'info' | 'warning' | 'error' | 'message' | 'loading' */
     type: "success",
     /** 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center' */
@@ -406,6 +407,10 @@ export default class OfficalDemoService
     }
 
     let notification = this._notificationService.show(opts);
+    // “通知”连续探出会彼此覆盖
+    // let notification2 = this._notificationService.show(opts);
+    // 没有以下函数
+    // let notification  = univerAPI.showNotifiction(opts);
 
     this._actionCounter++;
     return null !== notification;
@@ -416,7 +421,7 @@ export default class OfficalDemoService
    */
   private readonly _messageProps: IMessageProps = {
     id: MESSAGE_OFFICAL_DEMO,
-    content: "message.content",
+    content: "message.con\ntent",
     /** 'success' | 'info' | 'warning' | 'error' | 'loading' */
     type: MessageType.Success,
     /** 持续时间 */
@@ -453,6 +458,8 @@ export default class OfficalDemoService
     }
 
     let message = this._messageService.show(opts);
+    // “消息”不会重叠，会堆积显示
+    // let message2 = this._messageService.show(opts);
     // let message = univerAPI.showMessage(opts);
 
     // // 1秒后关闭
@@ -493,10 +500,13 @@ export default class OfficalDemoService
         disposable = fRange.attachAlertPopup({
           title: "Warning",
           message: "This is an warning message",
+          // 0: 信息
+          // 1: 警告
+          // 2: 错误
           type: 1,
           width: 10,
           height: 5,
-          key: COMPONENT_BUTTON_ICON,
+          key: COMPONENT_BUTTON_ICON, // 唯一标识符
         });
         break;
       case 2:
@@ -535,32 +545,65 @@ export default class OfficalDemoService
       //   // this._CanvasFloatDomService.addFloatDom();
       //   break;
       case 5:
-        // 报错
         disposable = fRange.showDropdown({
           location: {
             workbook: fWorkbook.getWorkbook(),
             worksheet: fWorksheet.getSheet(),
-            unitId: fRange.getUnitId(),
-            subUnitId: fRange.getSheetId(),
-            row: 10,
-            col: 10,
+            unitId: fWorkbook.getId(),
+            subUnitId: fWorksheet.getSheetId(),
+            row: 0,
+            col: 0,
           },
-          type: "list",
+          type: "list", //'datepicker''color''cascader'
           props: {
+            defaultValue: "defaultValue",
             options: [
-              { label: "Option 1", value: "option1" },
-              { label: "Option 2", value: "option2" },
+              { label: "Option 1", value: "option1", color: "red" },
+              { label: "Option 2", value: "option2", color: "red" },
             ],
           },
         });
         break;
+      // case 6:
+      //没有这个方法
+      // // 你应该在合适的时机（比如渲染完成）注册组件
+      // univerAPI.registerComponent(
+      //   "MyCustomFloatingDOMComponent",
+      //   ({ data }) => (
+      //     <div>
+      //       Hello
+      //       {data?.label}!
+      //     </div>
+      //   )
+      // );
+
+      // // 添加一个浮动 DOM
+      // // 如果 `disposable` 为 null，则表示浮动 DOM 添加失败
+      // const disposable = fWorksheet.addFloatDomToPosition({
+      //   componentKey: "MyCustomFloatingDOMComponent",
+      //   initPosition: {
+      //     startX: 100,
+      //     endX: 200,
+      //     startY: 100,
+      //     endY: 200,
+      //   },
+
+      //   // 这是组件的数据
+      //   data: {
+      //     label: "Univer",
+      //   },
+      // });
+
+      // // 移除浮动 DOM
+      // disposable.dispose();
+      // break;
       default:
         break;
     }
 
     setTimeout(() => {
       disposable?.dispose();
-    }, 2000);
+    }, 15000);
 
     this._actionCounter++;
     return null == disposable;
